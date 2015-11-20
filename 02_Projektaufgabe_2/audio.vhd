@@ -21,7 +21,7 @@ PORT(
 	timeOver			:IN			std_logic; --Time over
 	decValue			:IN			INTEGER; --Value of the decounter
 	bipLed			:OUT			std_logic_vector(8 downto 0); --Led to show the end of the decounter
-	debug			:OUT			INTEGER;
+	debug				:OUT			INTEGER;
 	bipper			:OUT			std_logic
 	);
 END audio;
@@ -31,10 +31,11 @@ END audio;
 --------------------------------------------
 ARCHITECTURE Behaviour OF audio IS
 --Intern signal declaration
-SIGNAL second		:INTEGER 	:=0;
+SIGNAL qSecond		:INTEGER 	:=0;
 SIGNAL internBip	:std_logic	:='0';
 SIGNAL bipON		:std_logic	:='0';
 
+SIGNAL prevClk		:std_logic  :='1';
 
 BEGIN
 
@@ -45,9 +46,10 @@ audio_proc : PROCESS (clk, clkQHz, freqSignal, decValue, timeOver)
 			--end of the counter and in start
 			IF(decValue = 0) AND (timeOver='1')THEN
 				--one minute passed
-				IF(second<3000) THEN
+				IF(qSecond<3000) THEN
 						--high state of the 250ms period
 						IF(clkQHz='1') THEN
+							prevClk<='1';
 						
 							--Bip ON
 							IF(bipON = '1') THEN
@@ -72,10 +74,13 @@ audio_proc : PROCESS (clk, clkQHz, freqSignal, decValue, timeOver)
 							bipLed<="000000000";
 							bipper<='0';
 							
-							second<=second+1;
-							
+							--allow to increment the QSec every 250ms and not every 20ns (each rising edge of clk50Mhz)
+							If(prevClk='1') THEN
+								prevClk<='0';
+								qSecond<=qSecond+1;
+							END IF;
 							--1 second passed
-							IF((second mod 4)=0) THEN
+							IF((qSecond mod 4)=0) THEN
 								bipON<= NOT bipON;
 							END IF;
 						
@@ -84,13 +89,13 @@ audio_proc : PROCESS (clk, clkQHz, freqSignal, decValue, timeOver)
 			
 				
 			ELSIF (timeOver='0') THEN
-				second<=0;
+				qSecond<=0;
 				bipper<='0';
 				bipLed<="000000000";
 			END IF;
 		END IF;
 		
-		debug<=second;
+		debug<=qSecond;
 		
 END PROCESS audio_proc;
 				

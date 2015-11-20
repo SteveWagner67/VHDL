@@ -34,6 +34,10 @@ ARCHITECTURE Behaviour OF decounter IS
 SIGNAL internCount :INTEGER	:=0; --Intern counter value
 SIGNAL decount		 :std_logic :='1';
 
+SIGNAL tMin			 :INTEGER	:=0;
+SIGNAL snMin		 :INTEGER	:=0;
+SIGNAL tSec 		 :INTEGER	:=0;
+SIGNAL snSec		 :INTEGER	:=0;
 
 
 BEGIN
@@ -56,6 +60,8 @@ dec_proc : PROCESS (clk, clk1Hz,startBtn)
 	
 			--Start
 			ELSE
+-- TEST modulus OR division
+			
 				--1 second passed
 				IF(clk1Hz='1') AND (decount='1') THEN	
 					decount<='0';
@@ -69,6 +75,11 @@ dec_proc : PROCESS (clk, clk1Hz,startBtn)
 				END IF;
 			END IF;			
 			decVal<=internCount;
+
+
+-- TEST AndLogic
+
+
 		END IF;
 		
 		
@@ -78,10 +89,23 @@ END PROCESS dec_proc;
 convert_proc : PROCESS (clk, internCount)
 	BEGIN
 		IF (clk'EVENT AND clk='1') THEN
-			tMinVal<=(internCount/600);
-			snMinVal<=((internCount mod 600)/60);
-			tSecVal<=(((internCount mod 600) mod 60)/10);
-			snSecVal<=(((internCount mod 600) mod 60) mod 10);
+	
+-- TEST modulus
+--			tMinVal<=(internCount/600);
+--			snMinVal<=((internCount mod 600)/60);
+--			tSecVal<=(((internCount mod 600) mod 60)/10);
+--			snSecVal<=(((internCount mod 600) mod 60) mod 10);
+			
+-- TEST division
+			tMin<=(internCount/600);
+			snMin<=((internCount/60)-(tMin*10));
+			tSec<=((internCount/10) - (tMin*60) - (snMin*6));
+			snSec<=(internCount - (tMin*600) - (snMin*60) - (tSec*10));
+					
+			tMinVal<=tMin;
+			snMinVal<=snMin;
+			tSecVal<=tSec;
+			snSecVal<=snSec;
 		END IF;
 	
 END PROCESS convert_proc;
