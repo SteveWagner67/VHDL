@@ -1,0 +1,18 @@
+-- Library Declaration --
+LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
+
+--------------------------------------------
+--	   ENTITY	                        --
+--------------------------------------------
+ENTITY twobitcounter IS
+PORT(
+	reset		:IN	std_logic;
+	clk		:IN	std_logic;
+	enable	:IN	std_logic;
+	q0			:OUT	std_logic; --LSB
+	q1			:OUT  std_logic;
+	q2			:OUT	std_logic;
+	q3			:OUT  std_logic; --MSB
+	);
+END twobitcounter;

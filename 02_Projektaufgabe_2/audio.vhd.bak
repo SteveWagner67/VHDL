@@ -1,0 +1,43 @@
+--------------------------------------------------
+-- Author: 				Steve Wagner
+-- Matrikelnummer: 	175309
+-- Datum: 				14/11/2015
+-- Brief:				Sound
+--------------------------------------------------
+
+-- Library Declaration --
+LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
+USE IEEE.numeric_std;
+
+--------------------------------------------
+--	   SUB ENTITY                         --
+--------------------------------------------
+ENTITY endTimer IS
+PORT(
+	clk				:IN			std_logic;--Clock 50MHz
+	clk1Hz			:IN			std_logic; --Clock 1Hz
+	clk250ms			:IN			std_logic; --Clock 1/4Hz
+	decValue			:IN			std_logic; --Value of the decounter
+	endIndicLed		:OUT			std_logic_vector(8 downto 0) --Led to show the end of the decounter
+	);
+END endTimer;
+
+--------------------------------------------
+--        ARCHITECTURE	                  --
+--------------------------------------------
+ARCHITECTURE Behaviour OF endTimer IS
+--Intern signal declaration
+SIGNAL minute		:INTEGER    :=0;
+SIGNAL clkCount	:INTEGER		:=0;
+SIGNAL state 		:INTEGER		:=0; --(0-3 -> 250ms 4-> 1sec)
+
+
+BEGIN
+
+
+				
+	
+
+
+END Behaviour;

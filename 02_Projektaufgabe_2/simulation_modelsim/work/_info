@@ -1,0 +1,254 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/altera/15.0
+Eaudio
+Z0 w1447885520
+Z1 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
+Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z3 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+Z4 dC:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/simulation_modelsim
+Z5 8C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/audio.vhd
+Z6 FC:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/audio.vhd
+l0
+L16
+VfhmXnS>@Z^M=A?2J;Po=O3
+!s100 ]bnPzDZHE@RfXNFoCjf]D3
+Z7 OV;C;10.3d;59
+32
+Z8 !s110 1447885547
+!i10b 1
+Z9 !s108 1447885547.459000
+Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/audio.vhd|
+Z11 !s107 C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/audio.vhd|
+!i113 1
+Z12 o-work work -2002 -explicit
+Z13 tExplicit 1
+Abehaviour
+R1
+R2
+R3
+Z14 DEx4 work 5 audio 0 22 fhmXnS>@Z^M=A?2J;Po=O3
+l39
+L32
+VcG5BS=1GV?lR8PC0B<G1c3
+!s100 3LY46nGWcDN?GXVh0zDnj2
+R7
+32
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 1
+R12
+R13
+Ecounter
+Z15 w1447881673
+R1
+R2
+R3
+R4
+Z16 8C:\Users\Steve\Desktop\4-Hochschule_Offenburg\Semestre 7\VHDL\Projekt\02_Projektaufgabe_2\counter.vhd
+Z17 FC:\Users\Steve\Desktop\4-Hochschule_Offenburg\Semestre 7\VHDL\Projekt\02_Projektaufgabe_2\counter.vhd
+l0
+L15
+V8<XSF5Ma^8BYMY]HR7lPj1
+!s100 RIz_;Jj;K76azVZ=<8f`K0
+R7
+32
+Z18 !s110 1447885541
+!i10b 1
+Z19 !s108 1447885541.229000
+Z20 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:\Users\Steve\Desktop\4-Hochschule_Offenburg\Semestre 7\VHDL\Projekt\02_Projektaufgabe_2\counter.vhd|
+Z21 !s107 C:\Users\Steve\Desktop\4-Hochschule_Offenburg\Semestre 7\VHDL\Projekt\02_Projektaufgabe_2\counter.vhd|
+!i113 1
+R12
+R13
+Abehaviour
+R1
+R2
+R3
+DEx4 work 7 counter 0 22 8<XSF5Ma^8BYMY]HR7lPj1
+l47
+L34
+V>9<1OC_MAePHgdc7LcQoI2
+!s100 B]VERAoHQMF[1V54LLGWO2
+R7
+32
+R18
+!i10b 1
+R19
+R20
+R21
+!i113 1
+R12
+R13
+Edecounter
+Z22 w1447878395
+R1
+R2
+R3
+R4
+Z23 8C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/decounter.vhd
+Z24 FC:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/decounter.vhd
+l0
+L16
+VeAijC0[]lfaghMm7WP@PV3
+!s100 z:l8JVcRfUjmKeo]E1d7<1
+R7
+32
+Z25 !s110 1447885546
+!i10b 1
+Z26 !s108 1447885546.204000
+Z27 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/decounter.vhd|
+Z28 !s107 C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/decounter.vhd|
+!i113 1
+R12
+R13
+Abehaviour
+R1
+R2
+R3
+DEx4 work 9 decounter 0 22 eAijC0[]lfaghMm7WP@PV3
+l39
+L32
+V3;[kzLhkS>`i61jlVjonh2
+!s100 n54h3X0Ea6L26jc`RPZ?42
+R7
+32
+R25
+!i10b 1
+R26
+R27
+R28
+!i113 1
+R12
+R13
+Edisplay
+Z29 w1447878464
+R1
+R2
+R3
+R4
+Z30 8C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/display.vhd
+Z31 FC:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/display.vhd
+l0
+L13
+VS:6UXB1RiWJ?oL1Hi<Sf62
+!s100 F@_Ve:kG@kP78l6m7hlYL2
+R7
+32
+Z32 !s110 1447885543
+!i10b 1
+Z33 !s108 1447885543.731000
+Z34 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/display.vhd|
+Z35 !s107 C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/display.vhd|
+!i113 1
+R12
+R13
+Abehaviour
+R1
+R2
+R3
+DEx4 work 7 display 0 22 S:6UXB1RiWJ?oL1Hi<Sf62
+l29
+L26
+VAo9_S[]dc_?4cck7?CYEZ2
+!s100 OccjJ=CdE3DjE5Y7z;E@G1
+R7
+32
+R32
+!i10b 1
+R33
+R34
+R35
+!i113 1
+R12
+R13
+Efreqdiv
+Z36 w1447884616
+R2
+R3
+R4
+Z37 8C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/freqDiv.vhd
+Z38 FC:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/freqDiv.vhd
+l0
+L15
+VaQ;JhXiaNM^<GCjh7^P^P2
+!s100 WVLgWJbH:>Rc3Ej>mmHCk0
+R7
+32
+Z39 !s110 1447885545
+!i10b 1
+Z40 !s108 1447885544.982000
+Z41 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/freqDiv.vhd|
+Z42 !s107 C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/freqDiv.vhd|
+!i113 1
+R12
+R13
+Abehaviour
+R2
+R3
+DEx4 work 7 freqdiv 0 22 aQ;JhXiaNM^<GCjh7^P^P2
+l32
+L27
+Vn@]0DCf?LQ9fLlI9?AUKe0
+!s100 zT633b<1c5KA3eHRgc?Ua0
+R7
+32
+R39
+!i10b 1
+R40
+R41
+R42
+!i113 1
+R12
+R13
+Etimer
+Z43 w1447885372
+R1
+R2
+R3
+R4
+Z44 8C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/timer.vhd
+Z45 FC:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/timer.vhd
+l0
+L15
+VYBBYD]UmMmc@7RSfz<N>S3
+!s100 WbXN<3C8XgoSLWNi]@zij2
+R7
+32
+Z46 !s110 1447885542
+!i10b 1
+Z47 !s108 1447885542.483000
+Z48 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/timer.vhd|
+Z49 !s107 C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/02_Projektaufgabe_2/timer.vhd|
+!i113 1
+R12
+R13
+Abehaviour
+R1
+R2
+R3
+DEx4 work 5 timer 0 22 YBBYD]UmMmc@7RSfz<N>S3
+l140
+L45
+VWg8Dj4Ck7kJSQFDNiXg<l2
+!s100 NQj1]C_b]PbJ7YRblj_n93
+R7
+32
+R46
+!i10b 1
+R47
+R48
+R49
+!i113 1
+R12
+R13

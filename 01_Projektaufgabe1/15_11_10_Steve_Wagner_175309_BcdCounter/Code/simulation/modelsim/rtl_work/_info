@@ -1,0 +1,51 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/01_Projektaufgabe1/BcdCounter/simulation/modelsim
+Ebcdcounter
+Z1 w1447003238
+Z2 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+R0
+Z5 8C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/01_Projektaufgabe1/BcdCounter/bcdCounter.vhd
+Z6 FC:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/01_Projektaufgabe1/BcdCounter/bcdCounter.vhd
+l0
+L9
+V61YDRAF?ce7IW6IfJ4z]e1
+!s100 ebk75?l;?d?KgF=5?10A_3
+Z7 OV;C;10.3d;59
+31
+Z8 !s110 1447019262
+!i10b 1
+Z9 !s108 1447019262.574000
+Z10 !s90 -reportprogress|300|-93|-work|work|C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/01_Projektaufgabe1/BcdCounter/bcdCounter.vhd|
+Z11 !s107 C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/01_Projektaufgabe1/BcdCounter/bcdCounter.vhd|
+!i113 1
+Z12 o-93 -work work
+Z13 tExplicit 1
+Abehaviour
+R2
+R3
+R4
+DEx4 work 10 bcdcounter 0 22 61YDRAF?ce7IW6IfJ4z]e1
+l29
+L26
+V3kdf4VBLZWOIme:Cc=Ia03
+!s100 1W@39BP?`i3VZXe8;_d^o0
+R7
+31
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 1
+R12
+R13
