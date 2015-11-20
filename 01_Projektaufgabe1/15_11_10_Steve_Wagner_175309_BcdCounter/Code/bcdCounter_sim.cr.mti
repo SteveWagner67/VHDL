@@ -1,0 +1,18 @@
+{C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/01_Projektaufgabe1/BcdCounter/bcdDecoder.vhd} {1 {vcom -work work -2002 -explicit -stats=none {C:\Users\Steve\Desktop\4-Hochschule_Offenburg\Semestre 7\VHDL\Projekt\01_Projektaufgabe1\BcdCounter\bcdDecoder.vhd}
+Model Technology ModelSim ALTERA vcom 10.3d Compiler 2014.10 Oct  7 2014
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity bcdDecoder
+-- Compiling architecture Behaviour of bcdDecoder
+
+} {} {}} {C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/01_Projektaufgabe1/BcdCounter/bcdCounter.vhd} {1 {vcom -work work -2002 -explicit -stats=none {C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/01_Projektaufgabe1/BcdCounter/bcdCounter.vhd}
+Model Technology ModelSim ALTERA vcom 10.3d Compiler 2014.10 Oct  7 2014
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity bcdcounter
+-- Compiling architecture Behaviour of bcdcounter
+
+} {} {}}

@@ -1,0 +1,64 @@
+# Copyright (C) 1991-2015 Altera Corporation. All rights reserved.
+# Your use of Altera Corporation's design tools, logic functions 
+# and other software and tools, and its AMPP partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Altera Program License 
+# Subscription Agreement, the Altera Quartus II License Agreement,
+# the Altera MegaCore Function License Agreement, or other 
+# applicable license agreement, including, without limitation, 
+# that your use is for the sole purpose of programming logic 
+# devices manufactured by Altera and sold by Altera or its 
+# authorized distributors.  Please refer to the applicable 
+# agreement for further details.
+
+# Quartus II 64-Bit Version 15.0.2 Build 153 07/15/2015 SJ Web Edition
+# File: C:\Users\Steve\Desktop\4-Hochschule_Offenburg\Semestre 7\VHDL\Projekt\02_Projektaufgabe_2\timer.csv
+# Generated on: Wed Nov 18 09:51:03 2015
+
+# Note: The column header names should not be changed if you wish to import this .csv file into the Quartus II software.
+
+To,Direction,Location,I/O Bank,VREF Group,Fitter Location,I/O Standard,Reserved,Current Strength,Slew Rate,Differential Pair,Strict Preservation
+clk50MHz,Input,PIN_Y2,2,B2_N0,PIN_Y2,2.5 V,,,,,
+clrBtn,Input,PIN_M21,6,B6_N1,PIN_M21,2.5 V,,,,,
+endIndicLed[8],Output,PIN_F17,7,B7_N2,PIN_F17,2.5 V,,,,,
+endIndicLed[7],Output,PIN_G21,7,B7_N1,PIN_G21,2.5 V,,,,,
+endIndicLed[6],Output,PIN_G22,7,B7_N2,PIN_G22,2.5 V,,,,,
+endIndicLed[5],Output,PIN_G20,7,B7_N1,PIN_G20,2.5 V,,,,,
+endIndicLed[4],Output,PIN_H21,7,B7_N2,PIN_H21,2.5 V,,,,,
+endIndicLed[3],Output,PIN_E24,7,B7_N1,PIN_E24,2.5 V,,,,,
+endIndicLed[2],Output,PIN_E25,7,B7_N1,PIN_E25,2.5 V,,,,,
+endIndicLed[1],Output,PIN_E22,7,B7_N0,PIN_E22,2.5 V,,,,,
+endIndicLed[0],Output,PIN_E21,7,B7_N0,PIN_E21,2.5 V,,,,,
+incMinBtn,Input,PIN_R24,5,B5_N0,PIN_R24,2.5 V,,,,,
+incSecBtn,Input,PIN_N21,6,B6_N2,PIN_N21,2.5 V,,,,,
+snmSeg[6],Output,PIN_AC17,4,B4_N2,PIN_AC17,2.5 V,,,,,
+snmSeg[5],Output,PIN_AA15,4,B4_N2,PIN_AA15,2.5 V,,,,,
+snmSeg[4],Output,PIN_AB15,4,B4_N2,PIN_AB15,2.5 V,,,,,
+snmSeg[3],Output,PIN_AB17,4,B4_N1,PIN_AB17,2.5 V,,,,,
+snmSeg[2],Output,PIN_AA16,4,B4_N2,PIN_AA16,2.5 V,,,,,
+snmSeg[1],Output,PIN_AB16,4,B4_N2,PIN_AB16,2.5 V,,,,,
+snmSeg[0],Output,PIN_AA17,4,B4_N1,PIN_AA17,2.5 V,,,,,
+snsSeg[6],Output,PIN_AE18,4,B4_N2,PIN_AE18,2.5 V,,,,,
+snsSeg[5],Output,PIN_AF19,4,B4_N1,PIN_AF19,2.5 V,,,,,
+snsSeg[4],Output,PIN_AE19,4,B4_N1,PIN_AE19,2.5 V,,,,,
+snsSeg[3],Output,PIN_AH21,4,B4_N2,PIN_AH21,2.5 V,,,,,
+snsSeg[2],Output,PIN_AG21,4,B4_N2,PIN_AG21,2.5 V,,,,,
+snsSeg[1],Output,PIN_AA19,4,B4_N0,PIN_AA19,2.5 V,,,,,
+snsSeg[0],Output,PIN_AB19,4,B4_N0,PIN_AB19,2.5 V,,,,,
+startBtn,Input,PIN_M23,6,B6_N2,PIN_M23,2.5 V,,,,,
+tmSeg[6],Output,PIN_AA14,3,B3_N0,PIN_AA14,2.5 V,,,,,
+tmSeg[5],Output,PIN_AG18,4,B4_N2,PIN_AG18,2.5 V,,,,,
+tmSeg[4],Output,PIN_AF17,4,B4_N2,PIN_AF17,2.5 V,,,,,
+tmSeg[3],Output,PIN_AH17,4,B4_N2,PIN_AH17,2.5 V,,,,,
+tmSeg[2],Output,PIN_AG17,4,B4_N2,PIN_AG17,2.5 V,,,,,
+tmSeg[1],Output,PIN_AE17,4,B4_N2,PIN_AE17,2.5 V,,,,,
+tmSeg[0],Output,PIN_AD17,4,B4_N2,PIN_AD17,2.5 V,,,,,
+tsSeg[6],Output,PIN_AH18,4,B4_N2,PIN_AH18,2.5 V,,,,,
+tsSeg[5],Output,PIN_AF18,4,B4_N1,PIN_AF18,2.5 V,,,,,
+tsSeg[4],Output,PIN_AG19,4,B4_N2,PIN_AG19,2.5 V,,,,,
+tsSeg[3],Output,PIN_AH19,4,B4_N2,PIN_AH19,2.5 V,,,,,
+tsSeg[2],Output,PIN_AB18,4,B4_N0,PIN_AB18,2.5 V,,,,,
+tsSeg[1],Output,PIN_AC18,4,B4_N1,PIN_AC18,2.5 V,,,,,
+tsSeg[0],Output,PIN_AD18,4,B4_N1,PIN_AD18,2.5 V,,,,,
