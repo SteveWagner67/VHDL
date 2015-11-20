@@ -1,0 +1,92 @@
+# Reading C:/altera/15.0/modelsim_ase/tcl/vsim/pref.tcl
+# do bcdCounter_run_msim_gate_vhdl.do
+# if {[file exists gate_work]} {
+# 	vdel -lib gate_work -all
+# }
+# vlib gate_work
+# vmap work gate_work
+# Model Technology ModelSim PE vmap 10.3d Lib Mapping Utility 2014.10 Oct  7 2014
+# vmap -modelsim_quiet work gate_work 
+# Copying C:/altera/15.0/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# ** Warning: Copied C:/altera/15.0/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini.
+#          Updated modelsim.ini.
+# 
+# vcom -93 -work work {bcdCounter_7_1200mv_85c_slow.vho}
+# Model Technology ModelSim ALTERA vcom 10.3d Compiler 2014.10 Oct  7 2014
+# Start time: 23:03:38 on Nov 08,2015
+# vcom -reportprogress 300 -93 -work work bcdCounter_7_1200mv_85c_slow.vho 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package VITAL_Timing
+# -- Loading package VITAL_Primitives
+# -- Loading package dffeas_pack
+# -- Loading package altera_primitives_components
+# -- Loading package cycloneive_atom_pack
+# -- Loading package cycloneive_components
+# -- Compiling entity bcdDecoder
+# -- Compiling architecture structure of bcdDecoder
+# End time: 23:03:40 on Nov 08,2015, Elapsed time: 0:00:02
+# Errors: 0, Warnings: 0
+# 
+vsim work.bcddecoder
+# vsim -gui "+altera" -l msim_transcript -do "bcdCounter_run_msim_gate_vhdl.do" 
+# Start time: 23:03:49 on Nov 08,2015
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.vital_timing(body)
+# Loading ieee.vital_primitives(body)
+# Loading altera.dffeas_pack
+# Loading altera.altera_primitives_components
+# Loading cycloneive.cycloneive_atom_pack(body)
+# Loading cycloneive.cycloneive_components
+# Loading work.bcddecoder(structure)
+# Loading ieee.std_logic_arith(body)
+# Loading cycloneive.cycloneive_io_obuf(arch)
+# Loading cycloneive.cycloneive_io_ibuf(arch)
+# Loading cycloneive.cycloneive_clkctrl(vital_clkctrl)
+# Loading cycloneive.cycloneive_ena_reg(behave)
+# Loading cycloneive.cycloneive_lcell_comb(vital_lcell_comb)
+# Loading altera.dffeas(vital_dffeas)
+# ** Warning: Design size of 14292 statements exceeds ModelSim Altera Starter recommended capacity.
+# Expect performance to be adversely affected.
+do {C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/01_Projektaufgabe1/BcdCounter/simulation/modelsim/bcdCounter_run_msim_gate_vhdl.do}
+# if {[file exists gate_work]} {
+# 	vdel -lib gate_work -all
+# }
+# vlib gate_work
+# vmap work gate_work
+# Model Technology ModelSim PE vmap 10.3d Lib Mapping Utility 2014.10 Oct  7 2014
+# vmap -modelsim_quiet work gate_work 
+# Modifying modelsim.ini
+# 
+# vcom -93 -work work {bcdCounter_7_1200mv_85c_slow.vho}
+# Model Technology ModelSim ALTERA vcom 10.3d Compiler 2014.10 Oct  7 2014
+# Start time: 23:04:25 on Nov 08,2015
+# vcom -reportprogress 300 -93 -work work bcdCounter_7_1200mv_85c_slow.vho 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package VITAL_Timing
+# -- Loading package VITAL_Primitives
+# -- Loading package dffeas_pack
+# -- Loading package altera_primitives_components
+# -- Loading package cycloneive_atom_pack
+# -- Loading package cycloneive_components
+# -- Compiling entity bcdDecoder
+# -- Compiling architecture structure of bcdDecoder
+# End time: 23:04:26 on Nov 08,2015, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# 
+do {C:/Users/Steve/Desktop/4-Hochschule_Offenburg/Semestre 7/VHDL/Projekt/01_Projektaufgabe1/BcdCounter/bcdCounter.do}
+# Invalid window pattern: –undock
+# Invalid window pattern: –title
+# Invalid window pattern: VHDL_Kurs
+# .main_pane.wave.interior.cs.body.pw.wf
+# Loading work.bcddecoder(structure)
+# ** Warning: Design size of 14410 statements exceeds ModelSim Altera Starter recommended capacity.
+# Expect performance to be adversely affected.
+# End time: 08:21:13 on Nov 09,2015, Elapsed time: 9:17:24
+# Errors: 3, Warnings: 2

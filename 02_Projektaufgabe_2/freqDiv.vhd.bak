@@ -1,0 +1,50 @@
+--------------------------------------------------
+-- Author: 				Steve Wagner
+-- Matrikelnummer: 	175309
+-- Datum: 				13/11/2015
+-- Brief:				To become an 1Hz-frequenz
+--------------------------------------------------
+
+-- Library Declaration --
+LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
+
+--------------------------------------------
+--	   SUB ENTITY                         --
+--------------------------------------------
+ENTITY freq1Hz IS
+PORT(
+	clk50M			:IN			std_logic; --Clock 50MHz
+	periodns			:IN			INTEGER; --Period of the signal in ns
+	clkOut			:OUT			std_logic--Clock output
+	);
+END freq1Hz;
+
+--------------------------------------------
+--        ARCHITECTURE	                  --
+--------------------------------------------
+ARCHITECTURE Behaviour OF freq1Hz IS
+-- Interne signal declaration --
+SIGNAL countClk	: INTEGER 	:= 0; --Variable to count
+SIGNAL state		: std_logic := '0'; --Variable for the counter in second
+SIGNAL clkCount	:INTEGER		:=50000000; --Clock 50MHz
+
+BEGIN
+
+
+-- Registered Process --
+clk_proc : PROCESS (clk50M)
+	BEGIN
+		IF (clk50M'EVENT AND clk50M='1' AND clk50M'LAST_VALUE='0') THEN
+			--Increment the clock counter
+			countClk<=countClk+1;
+			IF (countClk = ((50*period)/2)) THEN
+				state <= NOT state;
+			END IF;
+		
+		END IF;
+		
+		clkOut<=state;
+END PROCESS clk_proc;
+
+END Behaviour;
