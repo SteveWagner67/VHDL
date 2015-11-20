@@ -9,9 +9,13 @@
 !/01_Projektaufgabe1/BcdCount_Code
 
 01_Projektaufgabe1/BcdCount_Code/*
-!/01_Projektaufgabe1/BcdCount_Code/.vhd
+!/01_Projektaufgabe1/BcdCount_Code/*.vhd
 !/01_Projektaufgabe1/BcdCount_Code/bcdZaehler.do
 
+!/02_Projektaufgabe_2
 
+02_Projektaufgabe_2/*
 
+!/02_Projektaufgabe_2/*.vhd
+!/02_Projektaufgabe_2/timer.do
 
