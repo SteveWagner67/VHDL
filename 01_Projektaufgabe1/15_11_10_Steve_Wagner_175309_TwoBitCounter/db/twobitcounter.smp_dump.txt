@@ -1,7 +1,0 @@
-
-State Machine - |twobitcounter|mode
-Name mode.st_3 mode.st_2 mode.st_1 mode.st_0 
-mode.st_0 0 0 0 0 
-mode.st_1 0 0 1 1 
-mode.st_2 0 1 0 1 
-mode.st_3 1 0 0 1 
