@@ -4,18 +4,20 @@
 #Except 01_Projektaufgabe1 and 02_Projektaufgabe_2
 !/01_Projektaufgabe1
 
-
+#Delete all the contain of 01_Projektaufgabe1 but not BcdCount_Code directory
 01_Projektaufgabe1/*
 !/01_Projektaufgabe1/BcdCount_Code
 
+#Delete all the contain of BcdCount_Code except .vhd and bcdZaehler.do
 01_Projektaufgabe1/BcdCount_Code/*
 !/01_Projektaufgabe1/BcdCount_Code/*.vhd
 !/01_Projektaufgabe1/BcdCount_Code/bcdZaehler.do
 
+#Except 02_Projektaufgabe_2
 !/02_Projektaufgabe_2
 
+#Delete the contain of 02_Projektaufgabe_2 expect the .vhd and timer.do
 02_Projektaufgabe_2/*
-
 !/02_Projektaufgabe_2/*.vhd
 !/02_Projektaufgabe_2/timer.do
 
