@@ -1,10 +1,17 @@
-#ignore all kind of files but not the folder
-*.*
-*/*
-!/02_Projektaufgabe_2/
+#delete all directories
+/*
 
+#Except 01_Projektaufgabe1 and 02_Projektaufgabe_2
 !/01_Projektaufgabe1
 
 
-#!*.vhd
-#!*.do
+01_Projektaufgabe1/*
+!/01_Projektaufgabe1/BcdCount_Code
+
+01_Projektaufgabe1/BcdCount_Code/*
+!/01_Projektaufgabe1/BcdCount_Code/.vhd
+!/01_Projektaufgabe1/BcdCount_Code/bcdZaehler.do
+
+
+
+
