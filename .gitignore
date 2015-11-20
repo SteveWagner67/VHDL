@@ -1,6 +1,0 @@
-#ignore all kind of files but not the folder
-#*.*
-*
-#!/02_Projektaufgabe_2/*.vhd
-
-#!/01_Projektaufgabe1
