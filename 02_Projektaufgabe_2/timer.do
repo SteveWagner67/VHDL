@@ -24,16 +24,17 @@ add wave /*
 force clk50MHz  1 0, 0 10ns -r 20ns
 
 #-- Start/Stop
-force startBtn 1 0, 0 1000ns, 1 1001ns
+force startBtn 1 0, 0 1000ns, 1 1001ns, 0 3000ns, 1 3001ns
+#force startBtn 1 0
 
 #-- Clear
-force clrBtn 1 0
+force clrBtn 1 0, 0 500ns, 1 530ns
 
 #-- Tast to increment the second
-force incSecBtn 0 0, 0 30ns -r 40ns
+force incSecBtn 0 0, 1 25ns -r 35ns
 
 #-- Tast to increment the minute
 force incMinBtn 0 0
 
 #-- run the simulation for 1000ns
-run 10000ns
+run 5000ns

@@ -50,10 +50,10 @@ SIGNAL	decValue		:INTEGER		:=0;	--Decounter value in second
 SIGNAL   clk1Hz		:std_logic	:='0';--Clock 1Hz
 SIGNAL   clkQ1Hz		:std_logic	:='0';--Clock 1/4Hz
 SIGNAL   freq3kHz		:std_logic	:='0';--Frequency of 3kHz
-SIGNAL 	snSecVal		:INTEGER		:=0;	--Single number value for the seconds
-SIGNAL	tSecVal		:INTEGER		:=0;	--Tens value for the seconds
-SIGNAL	snMinVal		:INTEGER		:=0;	--Single number value for the minutes
-SIGNAL	tMinVal		:INTEGER		:=0;	--Tens value for the minutes	
+SIGNAL 	snSecValIn		:INTEGER		:=0;	--Single number value for the seconds
+SIGNAL	tSecValIn		:INTEGER		:=0;	--Tens value for the seconds
+SIGNAL	snMinValIn		:INTEGER		:=0;	--Single number value for the minutes
+SIGNAL	tMinValIn		:INTEGER		:=0;	--Tens value for the minutes	
 SIGNAL 	timeOver		:std_logic	:='0';--Time over
 
 SIGNAL 	bStart		:std_logic  :='0';--state of the start/stop button
@@ -61,7 +61,12 @@ SIGNAL   bipSig		:std_logic	:='0';--Signal for the bipper
 
 
 SIGNAL   debug		:std_logic	:='0';--debug
-SIGNAL	second		:INTEGER		:=0;	--debug
+SIGNAL	qSecond		:INTEGER		:=0;	--debug
+
+SIGNAL 	snSecValOut		:INTEGER		:=0;	--Single number value for the seconds
+SIGNAL	tSecValOut		:INTEGER		:=0;	--Tens value for the seconds
+SIGNAL	snMinValOut		:INTEGER		:=0;	--Single number value for the minutes
+SIGNAL	tMinValOut		:INTEGER		:=0;	--Tens value for the minutes	
 
 --Component declaration
 
@@ -88,8 +93,17 @@ PORT(
 	
 	debug				:OUT	std_logic;
 	
-	--Value at number fo the second's units
-	counterValue		:OUT 			INTEGER
+-- TEST modulus OR division
+	--Value of the counter in seconds
+--	counterValue	:OUT 			INTEGER
+-- END TEST modulus OR division
+
+-- TEST AndLogic
+	snSec			:OUT 				INTEGER;
+	tSec			:OUT 				INTEGER;
+	snMin			:OUT 				INTEGER;
+	tMin			:OUT 				INTEGER
+-- END TEST AndLogic
 	);
 END COMPONENT;
 
@@ -100,13 +114,27 @@ PORT(
 		clk				:IN			std_logic;--Clock 50MHz
 		clk1Hz			:IN			std_logic;--Clock 1Hz
 		startBtn			:IN			std_logic;--Button for Start/Stop
-		countVal			:IN			INTEGER;	 --Value in second of the counter		
+-- TEST modulus OR division
+--		countVal		:IN		INTEGER;--Value in second of the counter				
+--		decVal		:OUT		INTEGER;--Value of the decounter
+--		snSecVal		:OUT		INTEGER;--Single number value for the seconds
+--		tSecVal		:OUT 		INTEGER;--Tens value for the seconds
+--		snMinVal		:OUT 		INTEGER;--Single number value for the minutes
+--		tMinVal		:OUT 		INTEGER--Tens value for the minutes	
+-- END TEST modulus OR division
+
+-- TEST AndLogic
+		snSecIn		:IN		INTEGER;--Single number value for the seconds
+		tSecIn		:IN 		INTEGER;--Tens value for the seconds
+		snMinIn		:IN 		INTEGER;--Single number value for the minutes
+		tMinIn		:IN 		INTEGER;--Tens value for the minutes	
 		
-		decVal			:OUT			INTEGER;	--Value of the decounter
-		snSecVal			:OUT			INTEGER;--Single number value for the seconds
-		tSecVal			:OUT 			INTEGER;--Tens value for the seconds
-		snMinVal			:OUT 			INTEGER;--Single number value for the minutes
-		tMinVal			:OUT 			INTEGER--Tens value for the minutes		
+		snSecOut		:OUT		INTEGER;--Single number value for the seconds
+		tSecOut		:OUT 		INTEGER;--Tens value for the seconds
+		snMinOut		:OUT 		INTEGER;--Single number value for the minutes
+		tMinOut		:OUT 		INTEGER--Tens value for the minutes	
+
+-- END TEST AndLogic
 	 );
 END COMPONENT;
 
@@ -158,11 +186,11 @@ END PROCESS button_proc;
 	
 --END PROCESS convert_proc;
 
-timeOver_proc : PROCESS (clk50MHz, bStart, snSecVal, tSecVal, snMinVal, tMinVal)
+timeOver_proc : PROCESS (clk50MHz, bStart, snSecValOut, tSecValOut, snMinValOut, tMinValOut)
 	BEGIN
 		--Time is over
 		IF (clk50MHz'EVENT AND clk50MHz='1') THEN
-			IF (snSecVal=0) AND (tSecVal=0) AND (snMinVal=0) AND (tMinVal=0) AND (bStart='1') THEN
+			IF (snSecValOut=0) AND (tSecValOut=0) AND (snMinValOut=0) AND (tMinValOut=0) AND (bStart='1') THEN
 				timeOver<='1';
 			ELSE
 				timeOver<='0';		
@@ -177,48 +205,56 @@ END PROCESS timeOver_proc;
 --Component Instantiation (the signals in the port map are from the entity or the intern signal declared in this file!)
 --Clock 1Hz
 clock1Hz : COMPONENT freqDiv
-PORT MAP (clk50MHz, bStart, 1000, clk1Hz); --1.000.000.000ns -> 1s
+PORT MAP (clk50MHz, bStart, 1000, clk1Hz); --1.000.000.000ns -> 1s - TEST 1000
 
 --Clock 1/4Hz
 clockQHz : COMPONENT freqDiv
-PORT MAP (clk50MHz, timeOver, 250, clkQ1Hz); --125.000.000 ns -> 125ms
+PORT MAP (clk50MHz, timeOver, 250, clkQ1Hz); --250.000.000 ns -> 250ms - TEST 250
 
---Signal's frequency 1kHz
+--Signal's frequency 3kHz
 freqSignal : COMPONENT freqDiv
-PORT MAP (clk50MHz, bipSig, 33, freq3kHz); --1.000.000ns
+PORT MAP (clk50MHz, bipSig, 33, freq3kHz); --333.333ns - TEST 33
 
 --Counter
 count : COMPONENT counter
-PORT MAP (clk50MHz, clrBtn, bStart, incSecBtn, incMinBtn, debug, countValue);
+-- TEST modulus OR division
+--PORT MAP (clk50MHz, clrBtn, bStart, incSecBtn, incMinBtn, debug, countValue);
+-- END TEST modulus OR division
+
+-- TEST AndLogic
+PORT MAP (clk50MHz, clrBtn, bStart, incSecBtn, incMinBtn, debug, snSecValIn, tSecValIn, snMinValIn, tMinValIn);
+-- END TEST AndLogic 
 
 --Decounter
 decount : COMPONENT decounter
-PORT MAP (clk50MHz, clk1Hz, bStart, countValue, decValue, snSecVal, tSecVal, snMinVal, tMinVal);
-
+-- TEST modulus OR division
+--PORT MAP (clk50MHz, clk1Hz, bStart, countValue, decValue, snSecVal, tSecVal, snMinVal, tMinVal);
+PORT MAP (clk50MHz, clk1Hz, bStart, snSecValIn, tSecValIn, snMinValIn, tMinValIn, snSecValOut, tSecValOut, snMinValOut, tMinValOut);
+-- END TEST modulus OR division
 
 --Display the single numbers of a second on a segment
 dispSnSec: COMPONENT display
-PORT MAP (clk50MHz, snSecVal, snsSeg);
+PORT MAP (clk50MHz, snSecValOut, snsSeg);
 
 
 --Display the tens of a second on a segment
 dispTSec: COMPONENT display
-PORT MAP (clk50MHz, tSecVal, tsSeg);
+PORT MAP (clk50MHz, tSecValOut, tsSeg);
 
 
 --Display the single numbers of a minute on a segment
 dispSnMin: COMPONENT display
-PORT MAP (clk50MHz, snMinVal, snmSeg);
+PORT MAP (clk50MHz, snMinValOut, snmSeg);
 
 
 --Display the tens of a second on a minute
 dispTMin: COMPONENT display
-PORT MAP (clk50MHz, tMinVal, tmSeg);
+PORT MAP (clk50MHz, tMinValOut, tmSeg);
 
 
 --Audio
 bipper : COMPONENT audio
-PORT MAP (clk50MHz, clkQ1Hz, freq3kHz, timeOver, decValue, endIndicLed, second, bipSig);
+PORT MAP (clk50MHz, clkQ1Hz, freq3kHz, timeOver, decValue, endIndicLed, qSecond, bipSig);
 
 
 

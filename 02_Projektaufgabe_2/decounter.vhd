@@ -18,13 +18,28 @@ PORT(
 		clk			:IN		std_logic;--Clock 50MHz
 		clk1Hz		:IN		std_logic;--Clock 1Hz
 		startBtn		:IN		std_logic;--Button for Start/Stop
-		countVal		:IN		INTEGER;--Value in second of the counter		
 		
-		decVal		:OUT		INTEGER;--Value of the decounter
-		snSecVal		:OUT		INTEGER;--Single number value for the seconds
-		tSecVal		:OUT 		INTEGER;--Tens value for the seconds
-		snMinVal		:OUT 		INTEGER;--Single number value for the minutes
-		tMinVal		:OUT 		INTEGER--Tens value for the minutes	
+-- TEST modulus OR division
+--		countVal		:IN		INTEGER;--Value in second of the counter				
+--		decVal		:OUT		INTEGER;--Value of the decounter
+--		snSecVal		:OUT		INTEGER;--Single number value for the seconds
+--		tSecVal		:OUT 		INTEGER;--Tens value for the seconds
+--		snMinVal		:OUT 		INTEGER;--Single number value for the minutes
+--		tMinVal		:OUT 		INTEGER--Tens value for the minutes	
+-- END TEST modulus OR division
+
+-- TEST AndLogic
+		snSecIn		:IN		INTEGER;--Single number value for the seconds
+		tSecIn		:IN 		INTEGER;--Tens value for the seconds
+		snMinIn		:IN 		INTEGER;--Single number value for the minutes
+		tMinIn		:IN 		INTEGER;--Tens value for the minutes	
+		
+		snSecOut		:OUT		INTEGER;--Single number value for the seconds
+		tSecOut		:OUT 		INTEGER;--Tens value for the seconds
+		snMinOut		:OUT 		INTEGER;--Single number value for the minutes
+		tMinOut		:OUT 		INTEGER--Tens value for the minutes	
+
+-- END TEST AndLogic
 	 );
 END decounter;
 
@@ -46,66 +61,132 @@ BEGIN
 dec_proc : PROCESS (clk, clk1Hz,startBtn)
 	BEGIN
 		IF (clk'EVENT AND clk='1') THEN
+				
 			--Stop
 			IF (startBtn='0') THEN
-				--Save the value of the counter
-				IF(countVal<=0) THEN
-					internCount<=0;
-				
+-- TEST modulus OR division			
+--				--Save the value of the counter
+--				IF(countVal<=0) THEN
+--					internCount<=0;
+--				
+--				ELSE
+--					internCount<=countVal;
+--				END IF;
+-- END TEST modulus OR division	
+			
+-- TEST AndLogic
+				IF(snSecIn<=0) THEN
+					snSec<=0;
 				ELSE
-					internCount<=countVal;
+					snSec<=snSecIn;
 				END IF;
 			
+				IF(tSecIn<=0) THEN
+					tSec<=0;
+				ELSE
+					tSec<=tSecIn;
+				END IF;
 			
-	
+				IF(snMinIn<=0) THEN
+					snMin<=0;
+				ELSE
+					snMin<=snMinIn;
+				END IF;
+			
+				IF(tMinIn<=0) THEN
+					tMin<=0;
+				ELSE
+					tMin<=tMinIn;	
+				END IF;
+				
+-- END TEST AndLogic		
 			--Start
 			ELSE
--- TEST modulus OR division
-			
+-- TEST modulus OR division			
 				--1 second passed
-				IF(clk1Hz='1') AND (decount='1') THEN	
-					decount<='0';
-					internCount<=internCount-1;
-					IF(internCount<=0) THEN
-						internCount<=0;
-					END IF;
-						
-				ELSIF (clk1Hz='0') THEN
-					decount<='1';
-				END IF;
-			END IF;			
-			decVal<=internCount;
+--				IF(clk1Hz='1') AND (decount='1') THEN	
+--					decount<='0';
+--					internCount<=internCount-1;
+--					IF(internCount<=0) THEN
+--						internCount<=0;
+--					END IF;
+--						
+--				ELSIF (clk1Hz='0') THEN
+--					decount<='1';
+--				END IF;
+-- END TEST modulus OR division
 
 
 -- TEST AndLogic
+				IF(snSec<=0) THEN
+					IF(tSec<=0) THEN
+						IF(snMin<=0) THEN
+							IF(tMin<=0) THEN
+								tMin<=0;
+								snMin<=0;
+								tSec<=0;
+								snSec<=0;
+							ELSE
+								tMin<=tMin-1;
+							END IF;
+						ELSE
+							snMin<=snMin-1;
+						END IF;
+					ELSE
+						tSec<=tSec-1;
+					END IF;			
+				ELSE
+					snSec<=snSec-1;
+				END IF;
 
-
+-- END TEST AndLogic
+			END IF;	
+-- TEST modulus OR division				
+--			decVal<=internCount;
+-- END TEST modulus OR division				
 		END IF;
 		
 		
 		
 END PROCESS dec_proc;
 
-convert_proc : PROCESS (clk, internCount)
+-- TEST modulus OR division	
+--convert_proc : PROCESS (clk, internCount)
+--	BEGIN
+--		IF (clk'EVENT AND clk='1') THEN
+--	
+---- TEST modulus
+----			tMinVal<=(internCount/600);
+----			snMinVal<=((internCount mod 600)/60);
+----			tSecVal<=(((internCount mod 600) mod 60)/10);
+----			snSecVal<=(((internCount mod 600) mod 60) mod 10);
+---- END TEST modulus
+--			
+---- TEST division
+----			tMin<=(internCount/600);
+----			snMin<=((internCount/60)-(tMin*10));
+----			tSec<=((internCount/10) - (tMin*60) - (snMin*6));
+----			snSec<=(internCount - (tMin*600) - (snMin*60) - (tSec*10));
+----					
+----			tMinVal<=tMin;
+----			snMinVal<=snMin;
+----			tSecVal<=tSec;
+----			snSecVal<=snSec;
+---- END TEST division
+--		END IF;
+--	
+--END PROCESS convert_proc;
+-- END TEST modulus OR division	
+
+
+
+convert_proc : PROCESS (clk, snSec, tSec, snMin, tMin)
 	BEGIN
 		IF (clk'EVENT AND clk='1') THEN
-	
--- TEST modulus
---			tMinVal<=(internCount/600);
---			snMinVal<=((internCount mod 600)/60);
---			tSecVal<=(((internCount mod 600) mod 60)/10);
---			snSecVal<=(((internCount mod 600) mod 60) mod 10);
-			
--- TEST division
-			tMin<=(internCount/600);
-			snMin<=((internCount/60)-(tMin*10));
-			tSec<=((internCount/10) - (tMin*60) - (snMin*6));
-			snSec<=(internCount - (tMin*600) - (snMin*60) - (tSec*10));
-					
-			tMinVal<=tMin;
-			snMinVal<=snMin;
-			tSecVal<=tSec;
-			snSecVal<=snSec;
+			snSecOut<=snSec;
+			tSecOut<=tSec;
+			snMinOut<=snMin;
+			tMinOut<=tMin;
 		END IF;
 	
 END PROCESS convert_proc;
