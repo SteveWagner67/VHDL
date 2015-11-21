@@ -50,6 +50,14 @@ SIGNAL	decValue		:INTEGER		:=0;	--Decounter value in second
 SIGNAL   clk1Hz		:std_logic	:='0';--Clock 1Hz
 SIGNAL   clkQ1Hz		:std_logic	:='0';--Clock 1/4Hz
 SIGNAL   freq3kHz		:std_logic	:='0';--Frequency of 3kHz
+
+SIGNAL 	snSecVal		:INTEGER		:=0;	--Single number value for the seconds
+SIGNAL	tSecVal		:INTEGER		:=0;	--Tens value for the seconds
+SIGNAL	snMinVal		:INTEGER		:=0;	--Single number value for the minutes
+SIGNAL	tMinVal		:INTEGER		:=0;	--Tens value for the minutes	
+
+
+
 SIGNAL 	snSecValIn		:INTEGER		:=0;	--Single number value for the seconds
 SIGNAL	tSecValIn		:INTEGER		:=0;	--Tens value for the seconds
 SIGNAL	snMinValIn		:INTEGER		:=0;	--Single number value for the minutes
@@ -177,14 +185,6 @@ button_proc : PROCESS (clk50MHz, startBtn)
 END PROCESS button_proc;
 
 
---convert_proc : PROCESS (countValue)
---	BEGIN
---		tMinVal<=(countValue/600);
---		snMinVal<=((countValue mod 600)/60);
---		tSecVal<=(((countValue mod 600) mod 60)/10);
---		snSecVal<=(((countValue mod 600) mod 60) mod 10);
-	
---END PROCESS convert_proc;
 
 timeOver_proc : PROCESS (clk50MHz, bStart, snSecValOut, tSecValOut, snMinValOut, tMinValOut)
 	BEGIN
@@ -229,9 +229,13 @@ PORT MAP (clk50MHz, clrBtn, bStart, incSecBtn, incMinBtn, debug, snSecValIn, tSe
 decount : COMPONENT decounter
 -- TEST modulus OR division
 --PORT MAP (clk50MHz, clk1Hz, bStart, countValue, decValue, snSecVal, tSecVal, snMinVal, tMinVal);
-PORT MAP (clk50MHz, clk1Hz, bStart, snSecValIn, tSecValIn, snMinValIn, tMinValIn, snSecValOut, tSecValOut, snMinValOut, tMinValOut);
 -- END TEST modulus OR division
 
+-- TEST AndLogic
+PORT MAP (clk50MHz, clk1Hz, bStart, snSecValIn, tSecValIn, snMinValIn, tMinValIn, snSecValOut, tSecValOut, snMinValOut, tMinValOut);
+-- END TEST AndLogic
+
+-- TEST AndLogic
 --Display the single numbers of a second on a segment
 dispSnSec: COMPONENT display
 PORT MAP (clk50MHz, snSecValOut, snsSeg);
@@ -250,6 +254,29 @@ PORT MAP (clk50MHz, snMinValOut, snmSeg);
 --Display the tens of a second on a minute
 dispTMin: COMPONENT display
 PORT MAP (clk50MHz, tMinValOut, tmSeg);
+-- END TEST AndLogic
+
+
+-- TEST modulus OR division
+----Display the single numbers of a second on a segment
+--dispSnSec: COMPONENT display
+--PORT MAP (clk50MHz, snSecVal, snsSeg);
+--
+--
+----Display the tens of a second on a segment
+--dispTSec: COMPONENT display
+--PORT MAP (clk50MHz, tSecVal, tsSeg);
+--
+--
+----Display the single numbers of a minute on a segment
+--dispSnMin: COMPONENT display
+--PORT MAP (clk50MHz, snMinVal, snmSeg);
+--
+--
+----Display the tens of a second on a minute
+--dispTMin: COMPONENT display
+--PORT MAP (clk50MHz, tMinVal, tmSeg);
+--END  TEST modulus OR division
 
 
 --Audio

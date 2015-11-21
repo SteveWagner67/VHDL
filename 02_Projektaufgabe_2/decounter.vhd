@@ -103,7 +103,7 @@ dec_proc : PROCESS (clk, clk1Hz,startBtn)
 			--Start
 			ELSE
 -- TEST modulus OR division			
-				--1 second passed
+--				--1 second passed
 --				IF(clk1Hz='1') AND (decount='1') THEN	
 --					decount<='0';
 --					internCount<=internCount-1;
@@ -179,7 +179,7 @@ END PROCESS dec_proc;
 -- END TEST modulus OR division	
 
 
-
+-- TEST AndLogic
 convert_proc : PROCESS (clk, snSec, tSec, snMin, tMin)
 	BEGIN
 		IF (clk'EVENT AND clk='1') THEN
@@ -190,6 +190,9 @@ convert_proc : PROCESS (clk, snSec, tSec, snMin, tMin)
 		END IF;
 	
 END PROCESS convert_proc;
+
+-- END TEST AndLogic
+
 
 END Behaviour;
 

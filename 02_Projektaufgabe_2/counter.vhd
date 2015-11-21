@@ -84,15 +84,15 @@ count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
 				
 				
 -- TEST modulus OR division	
-				--clear button tasted
+--				--clear button tasted
 --				IF(clrBtn='0') THEN
 --					countSec<=0;
 --					countMin<=0;
 --				END IF;
-			
+--			
 --				IF(pushSec='1') THEN
 --					--Button should be released to increment
---					IF(incSecBtn='1') AND (clk'EVENT AND clk='1') THEN
+--					IF(incSecBtn='1') THEN
 --						pushSec<='0';
 --						countSec<=countSec+1;
 --					END IF;
@@ -101,7 +101,7 @@ count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
 --				
 --				IF(pushMin='1') THEN
 --					--Button should be released to increment
---					IF(incMinBtn='1') AND (clk'EVENT AND clk='1') THEN
+--					IF(incMinBtn='1') THEN
 --						pushMin<='0';
 --						countMin<=countMin+1;
 --					END IF;
@@ -165,26 +165,27 @@ count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
 					snMin<=snMinInt;
 					tMin<=tMinInt;
 				END IF;
-							
+-- END TEST AndLogic								
 			END IF;
--- END TEST AndLogic	
+
 
 -- TEST modulus OR division	
 	
-			--TODO add here if countSec>=60 if the minute doesn't increment
-		
-			--Save the counter's value in second
+--			--TODO add here if countSec>=60 if the minute doesn't increment
+--		
+--			--Save the counter's value in second
 --			internCount<=((countMin*60)+(countSec));
 --		
---			--minimum 00m00m and maximum 99m59s
---			IF(internCount > 5999) OR (internCount < 0) THEN
---				counterValue<=0;
---				internCount<=0;
---				countSec<=0;
---				countMin<=0;
---			ELSE
---				counterValue<=internCount;
---			END IF;
+--
+--				--minimum 00m00m and maximum 99m59s
+--				IF(internCount > 5999) OR (internCount < 0)  THEN
+--					counterValue<=0;
+--					internCount<=0;
+--					countSec<=0;
+--					countMin<=0;
+--				ELSE
+--					counterValue<=internCount;
+--				END IF;
 	
 -- END TEST modulus OR division
 	

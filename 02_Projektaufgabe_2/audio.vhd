@@ -32,6 +32,7 @@ END audio;
 ARCHITECTURE Behaviour OF audio IS
 --Intern signal declaration
 SIGNAL qSecond		:INTEGER 	:=0;
+SIGNAL second		:INTEGER 	:=0;
 SIGNAL internBip	:std_logic	:='0';
 SIGNAL bipON		:std_logic	:='0';
 
@@ -45,8 +46,16 @@ audio_proc : PROCESS (clk, clkQHz, freqSignal, decValue, timeOver)
 		IF (clk'EVENT AND clk='1') THEN
 			--end of the counter and in start
 			IF(decValue = 0) AND (timeOver='1')THEN
-				--one minute passed (240 because one minute is 60s and qSecond is 250ms (-> 1/4 of a second))
-				IF(qSecond<240) THEN
+				
+-- TEST modulus OR division
+--				--one minute passed (240 because one minute is 60s and qSecond is 250ms (-> 1/4 of a second))
+--				IF(qSecond<16) THEN
+-- END TEST modulus OR division
+
+-- TEST AndLogic
+				--one minute passed
+				IF(second<4) THEN
+-- TEST AndLogic
 						--high state of the 250ms period
 						IF(clkQHz='1') THEN
 							prevClk<='1';
@@ -73,17 +82,32 @@ audio_proc : PROCESS (clk, clkQHz, freqSignal, decValue, timeOver)
 							--In all case in the low state of the period
 							bipLed<="000000000";
 							bipper<='0';
+
 							
 							--allow to increment the QSec every 250ms and not every 20ns (each rising edge of clk50Mhz)
 							If(prevClk='1') THEN
 								prevClk<='0';
 								qSecond<=qSecond+1;
+								
+-- TEST AndLogic
+--								IF(qSecond>=4) THEN
+--									second<=second+1;
+--									qSecond<=1;
+--									bipON<= NOT bipOn;
+--								END IF;
+-- END TEST AndLogic	
+
+-- TEST modulus OR division
+								--1 second passed
+								IF((qSecond mod 4)=0) THEN
+									bipON<= NOT bipON;
+								END IF;
+-- END TEST modulus OR division
+								
 							END IF;
-							--1 second passed
-							IF((qSecond mod 4)=0) THEN
-								bipON<= NOT bipON;
-							END IF;
-						
+
+
+					
 						END IF;					
 				END IF;
 			
