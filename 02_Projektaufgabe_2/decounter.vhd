@@ -54,16 +54,16 @@ SIGNAL snMin		 :INTEGER	:=0;
 SIGNAL tSec 		 :INTEGER	:=0;
 SIGNAL snSec		 :INTEGER	:=0;
 
+SIGNAL inProgress	 :std_logic	:='0';
+
 
 BEGIN
 
 -- Registered Process --
-dec_proc : PROCESS (clk, clk1Hz,startBtn)
-	BEGIN
-		IF (clk'EVENT AND clk='1') THEN
-				
-			--Stop
-			IF (startBtn='0') THEN
+dec_proc : PROCESS (clk, clk1Hz, startBtn)
+	BEGIN				
+			--Stop and the timer wasn't in progress of decounting
+			IF (startBtn='0') AND (inProgress='0') AND (clk'EVENT AND clk='1')THEN
 -- TEST modulus OR division			
 --				--Save the value of the counter
 --				IF(countVal<=0) THEN
@@ -118,25 +118,50 @@ dec_proc : PROCESS (clk, clk1Hz,startBtn)
 
 
 -- TEST AndLogic
-				IF(snSec<=0) THEN
-					IF(tSec<=0) THEN
-						IF(snMin<=0) THEN
-							IF(tMin<=0) THEN
-								tMin<=0;
-								snMin<=0;
-								tSec<=0;
-								snSec<=0;
+			--1 second passed
+				IF(clk1Hz='1') AND (decount='1') AND (clk'EVENT AND clk='1')THEN	
+					--To wait of the next rising edge of the clock
+					decount<='0';
+					IF(snSec<=0) THEN
+						IF(tSec<=0) THEN
+							IF(snMin<=0) THEN
+								IF(tMin<=0) THEN
+									tMin<=0;
+									snMin<=0;
+									tSec<=0;
+									snSec<=0;
+									--timer over -> stop decouting
+									inProgress<='0';
+								ELSE
+									--timer is decounting
+									inProgress<='1';
+									tMin<=tMin-1;
+									snMin<=9;
+									tSec<=5;
+									snSec<=9;
+								END IF;
 							ELSE
-								tMin<=tMin-1;
+								--timer is decounting
+								inProgress<='1';
+								snMin<=snMin-1;
+								tSec<=5;
+								snSec<=9;
 							END IF;
 						ELSE
-							snMin<=snMin-1;
-						END IF;
+							--timer is decounting
+							inProgress<='1';
+							tSec<=tSec-1;
+							snSec<=9;
+						END IF;			
 					ELSE
-						tSec<=tSec-1;
-					END IF;			
-				ELSE
-					snSec<=snSec-1;
+						--timer is decounting
+						inProgress<='1';
+						snSec<=snSec-1;
+					END IF;
+					
+				ELSIF (clk1Hz='0') THEN
+					--To wait of the next rising edge of the clock
+					decount<='1';
 				END IF;
 
 -- END TEST AndLogic
@@ -144,8 +169,10 @@ dec_proc : PROCESS (clk, clk1Hz,startBtn)
 -- TEST modulus OR division				
 --			decVal<=internCount;
 -- END TEST modulus OR division				
-		END IF;
-		
+			snSecOut<=snSec;
+			tSecOut<=tSec;
+			snMinOut<=snMin;
+			tMinOut<=tMin;
 		
 		
 END PROCESS dec_proc;
@@ -177,21 +204,6 @@ END PROCESS dec_proc;
 --	
 --END PROCESS convert_proc;
 -- END TEST modulus OR division	
-
-
--- TEST AndLogic
-convert_proc : PROCESS (clk, snSec, tSec, snMin, tMin)
-	BEGIN
-		IF (clk'EVENT AND clk='1') THEN
-			snSecOut<=snSec;
-			tSecOut<=tSec;
-			snMinOut<=snMin;
-			tMinOut<=tMin;
-		END IF;
-	
-END PROCESS convert_proc;
-
--- END TEST AndLogic
 
 
 END Behaviour;

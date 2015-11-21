@@ -63,11 +63,8 @@ BEGIN
 -- Count second Process --
 count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
 	BEGIN		
-		
 			--Stop state
-			IF(bStart='0') THEN
-
-			
+			IF(bStart='0') AND (clk'EVENT AND clk='1') THEN
 
 				--Button to increment the seconds is tasted
 				IF(incSecBtn='0') THEN
@@ -109,8 +106,8 @@ count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
 -- END TEST modulus OR division	
 
 -- TEST AndLogic
-				--clear button tasted
-				IF(clrBtn='0') THEN
+				--clear button tasted and rising edge of the clock
+				IF(clrBtn='0')THEN
 					snSecInt<=0;
 					tSecInt<=0;
 					snMinInt<=0;
@@ -119,8 +116,8 @@ count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
 
 
 				IF(pushSec='1') THEN
-					--Button should be released to increment
-					IF(incSecBtn='1') THEN
+					--Button should be released to increment and in rising edge of the clock
+					IF(incSecBtn='1')THEN
 						pushSec<='0';
 						IF(snSecInt=9) THEN
 							IF(tSecInt=5) THEN
@@ -140,7 +137,7 @@ count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
 				
 				
 				IF(pushMin='1') THEN
-					--Button should be released to increment
+					--Button should be released to increment and in rising edge of the clock
 					IF(incMinBtn='1')THEN
 						pushMin<='0';
 						IF(snMinInt=9) THEN
@@ -159,12 +156,10 @@ count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
 					END IF;
 				END IF;
 				
-				IF (clk'EVENT AND clk='1') THEN
 					snSec<=snSecInt;
 					tSec<=tSecInt;
 					snMin<=snMinInt;
 					tMin<=tMinInt;
-				END IF;
 -- END TEST AndLogic								
 			END IF;
 

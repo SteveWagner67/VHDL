@@ -76,6 +76,7 @@ SIGNAL	tSecValOut		:INTEGER		:=0;	--Tens value for the seconds
 SIGNAL	snMinValOut		:INTEGER		:=0;	--Single number value for the minutes
 SIGNAL	tMinValOut		:INTEGER		:=0;	--Tens value for the minutes	
 
+SIGNAL  	pushStart		:std_logic	:='0';
 --Component declaration
 
 
@@ -178,10 +179,17 @@ BEGIN
 
 button_proc : PROCESS (clk50MHz, startBtn)
 	BEGIN
-		IF(startBtn = '0') AND (clk50MHz'EVENT AND clk50MHz='1') THEN
-			bStart<= NOT bStart;
+		IF(startBtn = '0') THEN
+			pushStart<='1';
 		END IF;
 	
+		IF(pushStart='1') AND (clk50MHz'EVENT AND clk50MHz='1') THEN
+			--Wait of the start button is released
+			IF(startBtn='1') THEN
+				pushStart<='0';
+				bStart<= NOT bStart;
+			END IF;
+		END IF;
 END PROCESS button_proc;
 
 
@@ -205,7 +213,7 @@ END PROCESS timeOver_proc;
 --Component Instantiation (the signals in the port map are from the entity or the intern signal declared in this file!)
 --Clock 1Hz
 clock1Hz : COMPONENT freqDiv
-PORT MAP (clk50MHz, bStart, 1000, clk1Hz); --1.000.000.000ns -> 1s - TEST 1000
+PORT MAP (clk50MHz, bStart, 500, clk1Hz); --1.000.000.000ns -> 1s - TEST 1000
 
 --Clock 1/4Hz
 clockQHz : COMPONENT freqDiv
