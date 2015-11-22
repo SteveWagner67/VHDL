@@ -46,16 +46,10 @@ audio_proc : PROCESS (clk, clkQHz, freqSignal, decValue, timeOver)
 		IF (clk'EVENT AND clk='1') THEN
 			--end of the counter and in start
 			IF(decValue = 0) AND (timeOver='1')THEN
-				
--- TEST modulus OR division
---				--one minute passed (240 because one minute is 60s and qSecond is 250ms (-> 1/4 of a second))
---				IF(qSecond<16) THEN
--- END TEST modulus OR division
-
--- TEST AndLogic
+			
 				--one minute passed
 				IF(second<4) THEN
--- TEST AndLogic
+				
 						--high state of the 250ms period
 						IF(clkQHz='1') THEN
 							prevClk<='1';

@@ -51,13 +51,6 @@ SIGNAL   clk1Hz		:std_logic	:='0';--Clock 1Hz
 SIGNAL   clkQ1Hz		:std_logic	:='0';--Clock 1/4Hz
 SIGNAL   freq3kHz		:std_logic	:='0';--Frequency of 3kHz
 
-SIGNAL 	snSecVal		:INTEGER		:=0;	--Single number value for the seconds
-SIGNAL	tSecVal		:INTEGER		:=0;	--Tens value for the seconds
-SIGNAL	snMinVal		:INTEGER		:=0;	--Single number value for the minutes
-SIGNAL	tMinVal		:INTEGER		:=0;	--Tens value for the minutes	
-
-
-
 SIGNAL 	snSecValIn		:INTEGER		:=0;	--Single number value for the seconds
 SIGNAL	tSecValIn		:INTEGER		:=0;	--Tens value for the seconds
 SIGNAL	snMinValIn		:INTEGER		:=0;	--Single number value for the minutes
@@ -77,6 +70,11 @@ SIGNAL	snMinValOut		:INTEGER		:=0;	--Single number value for the minutes
 SIGNAL	tMinValOut		:INTEGER		:=0;	--Tens value for the minutes	
 
 SIGNAL  	pushStart		:std_logic	:='0';
+
+SIGNAL 	changCnt			:std_logic	:='0';
+SIGNAL 	changDcnt			:std_logic	:='0';
+
+SIGNAL 	tmOv					:std_logic 	:='0'; --debug
 --Component declaration
 
 
@@ -101,18 +99,25 @@ PORT(
 	incMinBtn			:IN			std_logic;--Button for increment of the minutes
 	
 	debug				:OUT	std_logic;
-	
--- TEST modulus OR division
-	--Value of the counter in seconds
---	counterValue	:OUT 			INTEGER
--- END TEST modulus OR division
 
--- TEST AndLogic
-	snSec			:OUT 				INTEGER;
-	tSec			:OUT 				INTEGER;
-	snMin			:OUT 				INTEGER;
-	tMin			:OUT 				INTEGER
--- END TEST AndLogic
+	
+	snSecIn			:IN 				INTEGER;
+	tSecIn			:IN 				INTEGER;
+	snMinIn			:IN 				INTEGER;
+	tMinIn			:IN 				INTEGER;
+	
+	timeOver			:IN				std_logic;
+	
+	vChangeIn		:IN				std_logic;
+	
+	vChangOut			:OUT				std_logic;
+	
+	tmOver			:OUT				std_logic; --debug
+	
+	snSecOut			:OUT 				INTEGER;
+	tSecOut			:OUT 				INTEGER;
+	snMinOut			:OUT 				INTEGER;
+	tMinOut			:OUT 				INTEGER
 	);
 END COMPONENT;
 
@@ -123,27 +128,20 @@ PORT(
 		clk				:IN			std_logic;--Clock 50MHz
 		clk1Hz			:IN			std_logic;--Clock 1Hz
 		startBtn			:IN			std_logic;--Button for Start/Stop
--- TEST modulus OR division
---		countVal		:IN		INTEGER;--Value in second of the counter				
---		decVal		:OUT		INTEGER;--Value of the decounter
---		snSecVal		:OUT		INTEGER;--Single number value for the seconds
---		tSecVal		:OUT 		INTEGER;--Tens value for the seconds
---		snMinVal		:OUT 		INTEGER;--Single number value for the minutes
---		tMinVal		:OUT 		INTEGER--Tens value for the minutes	
--- END TEST modulus OR division
 
--- TEST AndLogic
 		snSecIn		:IN		INTEGER;--Single number value for the seconds
 		tSecIn		:IN 		INTEGER;--Tens value for the seconds
 		snMinIn		:IN 		INTEGER;--Single number value for the minutes
 		tMinIn		:IN 		INTEGER;--Tens value for the minutes	
+
+		changIn		:IN		std_logic;
+		
+		changOut		:OUT		std_logic;
 		
 		snSecOut		:OUT		INTEGER;--Single number value for the seconds
 		tSecOut		:OUT 		INTEGER;--Tens value for the seconds
 		snMinOut		:OUT 		INTEGER;--Single number value for the minutes
 		tMinOut		:OUT 		INTEGER--Tens value for the minutes	
-
--- END TEST AndLogic
 	 );
 END COMPONENT;
 
@@ -177,17 +175,20 @@ END COMPONENT;
 BEGIN
 
 
+
 button_proc : PROCESS (clk50MHz, startBtn)
 	BEGIN
-		IF(startBtn = '0') THEN
-			pushStart<='1';
-		END IF;
+		IF (clk50MHz'EVENT AND clk50MHz='1') THEN
+			IF(startBtn = '0') THEN
+				pushStart<='1';
+			END IF;
 	
-		IF(pushStart='1') AND (clk50MHz'EVENT AND clk50MHz='1') THEN
-			--Wait of the start button is released
-			IF(startBtn='1') THEN
-				pushStart<='0';
-				bStart<= NOT bStart;
+			IF(pushStart='1')THEN
+				--Wait of the start's button is released
+				IF(startBtn='1') THEN
+					pushStart<='0';
+					bStart<= NOT bStart;
+				END IF;
 			END IF;
 		END IF;
 END PROCESS button_proc;
@@ -225,67 +226,27 @@ PORT MAP (clk50MHz, bipSig, 33, freq3kHz); --333.333ns - TEST 33
 
 --Counter
 count : COMPONENT counter
--- TEST modulus OR division
---PORT MAP (clk50MHz, clrBtn, bStart, incSecBtn, incMinBtn, debug, countValue);
--- END TEST modulus OR division
-
--- TEST AndLogic
-PORT MAP (clk50MHz, clrBtn, bStart, incSecBtn, incMinBtn, debug, snSecValIn, tSecValIn, snMinValIn, tMinValIn);
--- END TEST AndLogic 
+PORT MAP (clk50MHz, clrBtn, bStart, incSecBtn, incMinBtn, debug, snSecValOut, tSecValOut, snMinValOut, tMinValOut, timeOver,changDcnt, changCnt, tmOv, snSecValIn, tSecValIn, snMinValIn, tMinValIn);
 
 --Decounter
 decount : COMPONENT decounter
--- TEST modulus OR division
---PORT MAP (clk50MHz, clk1Hz, bStart, countValue, decValue, snSecVal, tSecVal, snMinVal, tMinVal);
--- END TEST modulus OR division
+PORT MAP (clk50MHz, clk1Hz, bStart, snSecValIn, tSecValIn, snMinValIn, tMinValIn, changCnt, changDcnt, snSecValOut, tSecValOut, snMinValOut, tMinValOut);
 
--- TEST AndLogic
-PORT MAP (clk50MHz, clk1Hz, bStart, snSecValIn, tSecValIn, snMinValIn, tMinValIn, snSecValOut, tSecValOut, snMinValOut, tMinValOut);
--- END TEST AndLogic
-
--- TEST AndLogic
 --Display the single numbers of a second on a segment
 dispSnSec: COMPONENT display
 PORT MAP (clk50MHz, snSecValOut, snsSeg);
-
 
 --Display the tens of a second on a segment
 dispTSec: COMPONENT display
 PORT MAP (clk50MHz, tSecValOut, tsSeg);
 
-
 --Display the single numbers of a minute on a segment
 dispSnMin: COMPONENT display
 PORT MAP (clk50MHz, snMinValOut, snmSeg);
 
-
 --Display the tens of a second on a minute
 dispTMin: COMPONENT display
 PORT MAP (clk50MHz, tMinValOut, tmSeg);
--- END TEST AndLogic
-
-
--- TEST modulus OR division
-----Display the single numbers of a second on a segment
---dispSnSec: COMPONENT display
---PORT MAP (clk50MHz, snSecVal, snsSeg);
---
---
-----Display the tens of a second on a segment
---dispTSec: COMPONENT display
---PORT MAP (clk50MHz, tSecVal, tsSeg);
---
---
-----Display the single numbers of a minute on a segment
---dispSnMin: COMPONENT display
---PORT MAP (clk50MHz, snMinVal, snmSeg);
---
---
-----Display the tens of a second on a minute
---dispTMin: COMPONENT display
---PORT MAP (clk50MHz, tMinVal, tmSeg);
---END  TEST modulus OR division
-
 
 --Audio
 bipper : COMPONENT audio

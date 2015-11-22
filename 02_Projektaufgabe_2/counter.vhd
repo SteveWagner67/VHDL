@@ -21,19 +21,26 @@ PORT(
 	incMinBtn		:IN			std_logic; --Button to increment the minutes
 	
 	debug				:OUT			std_logic;
-	
-	
--- TEST modulus OR division
-	--Value of the counter in seconds
---	counterValue	:OUT 			INTEGER
--- END TEST modulus OR division
 
--- TEST AndLogic
-	snSec			:OUT 				INTEGER;
-	tSec			:OUT 				INTEGER;
-	snMin			:OUT 				INTEGER;
-	tMin			:OUT 				INTEGER
--- END TEST AndLogic
+	snSecIn			:IN 				INTEGER;
+	tSecIn			:IN 				INTEGER;
+	snMinIn			:IN 				INTEGER;
+	tMinIn			:IN 				INTEGER;
+	
+	timeOver			:IN				std_logic;
+	
+	
+	vChangeIn		:IN				std_logic;
+	
+	vChangOut			:OUT				std_logic;
+	
+	
+	tmOver			:OUT				std_logic; --debug
+	
+	snSecOut			:OUT 				INTEGER;
+	tSecOut			:OUT 				INTEGER;
+	snMinOut			:OUT 				INTEGER;
+	tMinOut			:OUT 				INTEGER
 	);
 END counter;
 
@@ -50,11 +57,23 @@ SIGNAL internCount	:INTEGER   	:=0;
 SIGNAl pushSec			:std_logic	:='0';
 SIGNAL pushMin			:std_logic	:='0';
 
-
+--Intern value
 SIGNAL snSecInt			:INTEGER		:=0;
 SIGNAL tSecInt				:INTEGER		:=0;
 SIGNAL snMinInt			:INTEGER		:=0;
 SIGNAL tMinInt				:INTEGER		:=0;
+
+
+SIGNAL 	snSecSave	:INTEGER		:=0;	--Single number value for the seconds
+SIGNAL	tSecSave		:INTEGER		:=0;	--Tens value for the seconds
+SIGNAL	snMinSave		:INTEGER		:=0;	--Single number value for the minutes
+SIGNAL	tMinSave		:INTEGER		:=0;	--Tens value for the minutes
+
+SIGNAL 	tmOv					:std_logic 	:='0';
+
+SIGNAL 	valChang		:std_logic:='0';
+
+SIGNAL 	statePrec	:std_logic :='0';
 
 
 
@@ -62,10 +81,39 @@ BEGIN
 
 -- Count second Process --
 count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
-	BEGIN		
+	BEGIN
+		IF(clk'EVENT AND clk='1') THEN
+			--if in a moment the time is over save it
+			IF(timeOver='1') THEN
+				tmOv<='1';
+			END IF;
+			
 			--Stop state
-			IF(bStart='0') AND (clk'EVENT AND clk='1') THEN
+			IF(bStart='0')THEN
 
+				--Value of the decounter has changed
+				IF(vChangeIn='1') THEN
+					tmOv<='0';
+				END IF;
+			
+			
+				--If the timer was over
+				IF(tmOv='1') THEN
+					snSecInt<=snSecSave;
+					tSecInt<=tSecSave;
+					snMinInt<=snMinSave;
+					tMinInt<=tMinSave;
+					valChang<='1';
+				--timer isn't over and last state was a start
+				ELSIF (tmOv='0') AND (statePrec='1') THEN
+					statePrec<='0';
+					snSecInt<=snSecIn;
+					tSecInt<=tSecIn;
+					snMinInt<=snMinIn;
+					tMinInt<=tMinIn;
+				END IF;
+			
+			
 				--Button to increment the seconds is tasted
 				IF(incSecBtn='0') THEN
 					pushSec<='1';
@@ -78,46 +126,22 @@ count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
 				END IF;
 				
 				
-				
-				
--- TEST modulus OR division	
---				--clear button tasted
---				IF(clrBtn='0') THEN
---					countSec<=0;
---					countMin<=0;
---				END IF;
---			
---				IF(pushSec='1') THEN
---					--Button should be released to increment
---					IF(incSecBtn='1') THEN
---						pushSec<='0';
---						countSec<=countSec+1;
---					END IF;
---				END IF;
---				
---				
---				IF(pushMin='1') THEN
---					--Button should be released to increment
---					IF(incMinBtn='1') THEN
---						pushMin<='0';
---						countMin<=countMin+1;
---					END IF;
---				END IF;
--- END TEST modulus OR division	
-
--- TEST AndLogic
 				--clear button tasted and rising edge of the clock
 				IF(clrBtn='0')THEN
 					snSecInt<=0;
 					tSecInt<=0;
 					snMinInt<=0;
 					tMinInt<=0;
+					--Value change
+					valChang<='1';
 				END IF;
 
 
 				IF(pushSec='1') THEN
 					--Button should be released to increment and in rising edge of the clock
 					IF(incSecBtn='1')THEN
+						--value changed
+						valChang<='1';
 						pushSec<='0';
 						IF(snSecInt=9) THEN
 							IF(tSecInt=5) THEN
@@ -132,13 +156,17 @@ count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
 						ELSE
 							snSecInt<=snSecInt+1;
 						END IF;
+						
 					END IF;
+					
 				END IF;
 				
 				
 				IF(pushMin='1') THEN
 					--Button should be released to increment and in rising edge of the clock
 					IF(incMinBtn='1')THEN
+						--value changed
+						valChang<='1';
 						pushMin<='0';
 						IF(snMinInt=9) THEN
 							IF(tMinInt=9) THEN
@@ -153,39 +181,34 @@ count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
 						ELSE
 							snMinInt<=snMinInt+1;
 						END IF;
+								
 					END IF;
+					
+					--Save the value if changed
+					IF(valChang='1') THEN
+						valChang<='0';
+						snSecSave<=snSecInt;
+						tSecSave<=tSecInt;
+						snMinSave<=snMinInt;
+						tMinSave<=tMinInt;
+					END IF;
+					
+					
 				END IF;
 				
-					snSec<=snSecInt;
-					tSec<=tSecInt;
-					snMin<=snMinInt;
-					tMin<=tMinInt;
--- END TEST AndLogic								
+				snSecOut<=snSecInt;
+				tSecOut<=tSecInt;
+				snMinOut<=snMinInt;
+				tMinOut<=tMinInt;						
+			--start
+			ELSE
+				statePrec<='1';
 			END IF;
-
-
--- TEST modulus OR division	
 	
---			--TODO add here if countSec>=60 if the minute doesn't increment
---		
---			--Save the counter's value in second
---			internCount<=((countMin*60)+(countSec));
---		
---
---				--minimum 00m00m and maximum 99m59s
---				IF(internCount > 5999) OR (internCount < 0)  THEN
---					counterValue<=0;
---					internCount<=0;
---					countSec<=0;
---					countMin<=0;
---				ELSE
---					counterValue<=internCount;
---				END IF;
-	
--- END TEST modulus OR division
-	
+			vChangOut<=valChang;
 			debug<=pushMin;
-			
+			tmOver<=tmOv;
+		END IF;	
 	
 		
 END PROCESS count_sec_proc;
