@@ -90,55 +90,58 @@ dec_proc : PROCESS (clk, clk1Hz, startBtn)
 				
 			--Start
 			ELSE
-				--1 second passed
-				IF(clk1Hz='1') AND (decount='1') AND (clk'EVENT AND clk='1')THEN	
-					--To wait of the next rising edge of the clock
-					decount<='0';
-					IF(snSec<=0) THEN
-						IF(tSec<=0) THEN
-							IF(snMin<=0) THEN
-								IF(tMin<=0) THEN
-									tMin<=0;
-									snMin<=0;
-									tSec<=0;
-									snSec<=0;
+				IF(clk'EVENT AND clk='1')THEN	
+					--1 second passed
+					IF(clk1Hz='1') AND (decount='1') THEN	
+						--To wait of the next rising edge of the clock
+						decount<='0';
+						IF(snSec<=0) THEN
+							IF(tSec<=0) THEN
+								IF(snMin<=0) THEN
+									IF(tMin<=0) THEN
+										tMin<=0;
+										snMin<=0;
+										tSec<=0;
+										snSec<=0;
+									ELSE
+										tMin<=tMin-1;
+										snMin<=9;
+										tSec<=5;
+										snSec<=9;
+									END IF;
 								ELSE
-									tMin<=tMin-1;
-									snMin<=9;
+									snMin<=snMin-1;
 									tSec<=5;
 									snSec<=9;
 								END IF;
 							ELSE
-								snMin<=snMin-1;
-								tSec<=5;
+								tSec<=tSec-1;
 								snSec<=9;
-							END IF;
+							END IF;			
 						ELSE
-							tSec<=tSec-1;
-							snSec<=9;
-						END IF;			
-					ELSE
-						snSec<=snSec-1;
-					END IF;
+							snSec<=snSec-1;
+						END IF;
 					
-					changOut<='1';
+						changOut<='1';
 					
 					
-				ELSIF (clk1Hz='0') THEN
-					--To wait of the next rising edge of the clock
-					decount<='1';
-					changOut<='0';
+					ELSIF (clk1Hz='0') THEN
+						--To wait of the next rising edge of the clock
+						decount<='1';
+						changOut<='0';
 								
-				ELSE
-					changOut<='0';
+					ELSE
+						changOut<='0';
+					END IF;
+				
 				END IF;
-				
 			END IF;
-				
+			
 			snSecOut<=snSec;
 			tSecOut<=tSec;
 			snMinOut<=snMin;
 			tMinOut<=tMin;
+			
 		END IF;
 		
 END PROCESS dec_proc;

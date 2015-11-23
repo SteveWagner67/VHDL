@@ -15,10 +15,10 @@ USE IEEE.numeric_std;
 ENTITY counter IS
 PORT(
 	clk				:IN			std_logic;--Clock 50MHz
-	clrBtn			:IN			std_logic; --Button Clear
+	clr				:IN			std_logic; --Button Clear
 	bStart			:IN			std_logic; --State of start/stop button 
-	incSecBtn		:IN			std_logic; --Button to increment the seconds
-	incMinBtn		:IN			std_logic; --Button to increment the minutes
+	incSec			:IN			std_logic; --Button to increment the seconds
+	incMin			:IN			std_logic; --Button to increment the minutes
 	
 	debug				:OUT			std_logic;
 
@@ -80,7 +80,7 @@ SIGNAL 	statePrec	:std_logic :='0';
 BEGIN
 
 -- Count second Process --
-count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
+count_sec_proc : PROCESS (clk, clr, bStart, incSec, incMin)
 	BEGIN
 		IF(clk'EVENT AND clk='1') THEN
 			--if in a moment the time is over save it
@@ -113,21 +113,10 @@ count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
 					tMinInt<=tMinIn;
 				END IF;
 			
-			
-				--Button to increment the seconds is tasted
-				IF(incSecBtn='0') THEN
-					pushSec<='1';
-				END IF;
-				
-				
-				--Button to increment the minutes is tasted
-				IF(incMinBtn='0') THEN
-					pushMin<='1';
-				END IF;
 				
 				
 				--clear button tasted and rising edge of the clock
-				IF(clrBtn='0')THEN
+				IF(clr='0')THEN
 					snSecInt<=0;
 					tSecInt<=0;
 					snMinInt<=0;
@@ -137,69 +126,57 @@ count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
 				END IF;
 
 
-				IF(pushSec='1') THEN
-					--Button should be released to increment and in rising edge of the clock
-					IF(incSecBtn='1')THEN
-						--value changed
-						valChang<='1';
-						pushSec<='0';
-						IF(snSecInt=9) THEN
-							IF(tSecInt=5) THEN
-								tSecInt<=0;
+				IF(incSec ='1') THEN
+					valChang<='1';
+					IF(snSecInt=9) THEN
+						IF(tSecInt=5) THEN
+							tSecInt<=0;
 							
-							ELSE
-								tSecInt<=tSecInt+1;
-							END IF;
-						
-							snSecInt<=0;
-						
 						ELSE
-							snSecInt<=snSecInt+1;
+							tSecInt<=tSecInt+1;
 						END IF;
 						
+						snSecInt<=0;
+						
+					ELSE
+						snSecInt<=snSecInt+1;
 					END IF;
-					
+						
 				END IF;
 				
 				
-				IF(pushMin='1') THEN
-					--Button should be released to increment and in rising edge of the clock
-					IF(incMinBtn='1')THEN
-						--value changed
-						valChang<='1';
-						pushMin<='0';
-						IF(snMinInt=9) THEN
-							IF(tMinInt=9) THEN
-								tMinInt<=0;
+				IF(incMin='1') THEN
+					--value changed
+					valChang<='1';
+					IF(snMinInt=9) THEN
+						IF(tMinInt=9) THEN
+							tMinInt<=0;
 							
-							ELSE
-								tMinInt<=tMinInt+1;
-							END IF;
-						
-							snMinInt<=0;
-						
 						ELSE
-							snMinInt<=snMinInt+1;
+							tMinInt<=tMinInt+1;
 						END IF;
-								
+						
+						snMinInt<=0;
+						
+					ELSE
+						snMinInt<=snMinInt+1;
 					END IF;
-					
-					--Save the value if changed
-					IF(valChang='1') THEN
-						valChang<='0';
-						snSecSave<=snSecInt;
-						tSecSave<=tSecInt;
-						snMinSave<=snMinInt;
-						tMinSave<=tMinInt;
-					END IF;
-					
-					
 				END IF;
+					
+				--Save the value if changed
+				IF(valChang='1') THEN
+					valChang<='0';
+					snSecSave<=snSecInt;
+					tSecSave<=tSecInt;
+					snMinSave<=snMinInt;
+					tMinSave<=tMinInt;
+				END IF;	
 				
 				snSecOut<=snSecInt;
 				tSecOut<=tSecInt;
 				snMinOut<=snMinInt;
-				tMinOut<=tMinInt;						
+				tMinOut<=tMinInt;	
+				
 			--start
 			ELSE
 				statePrec<='1';

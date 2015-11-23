@@ -25,7 +25,7 @@ force clk50MHz  1 0, 0 10ns -r 20ns
 
 #-- Start/Stop
 #force startBtn 1 0, 0 1000ns, 1 1001ns
-force startBtn 1 0, 0 1000ns, 1 1001ns, 0 2000ns, 1 2025ns, 0 2500ns, 1 2550ns, 0 6000ns, 1 6050ns, 0 6500ns, 1 6525ns, 0 7250ns, 1 7275ns, 0 7700ns, 1 7725ns, 0 9700ns, 1 9725ns
+force startBtn 1 0, 0 1000ns, 1 1001ns, 0 2000ns, 1 2025ns, 0 2500ns, 1 2550ns, 0 6500ns, 1 6525ns, 0 7250ns, 1 7275ns, 0 7700ns, 1 7725ns, 0 9700ns, 1 9725ns
 
 #-- Clear
 force clrBtn 1 0, 0 500ns, 1 530ns
