@@ -12,9 +12,9 @@ USE IEEE.numeric_std;
 
 ENTITY display IS
 PORT(
-		clk			:IN			std_logic;--Clock 50MHz
-		nbVal			:IN		INTEGER;--Value at integer of a number
-		sgm			:OUT 		std_logic_vector(6 downto 0)--Value in 7 bits for the segment (g downto a)
+		clk				:IN			std_logic;		--Clock 50MHz
+		nbVal				:IN			INTEGER;			--Value in integer of the number to display
+		sgm				:OUT 			std_logic_vector(6 downto 0)	--Value in a 7-bits-vector for the segment (g downto a)
 	);
 END display;
 
@@ -25,46 +25,48 @@ END display;
 --------------------------------------------
 ARCHITECTURE Behaviour OF display IS
 --- Intern Signal Declaration ----
-SIGNAL valBus	:std_logic_vector(3 downto 0)	:= "1111";--Value in 4 bits
+SIGNAL valVec	:std_logic_vector(3 downto 0)	:= "1111";--Value in 4 bits
 BEGIN	
 
 -- Convert the value in binary 4 bits --
 bin_proc : PROCESS (clk, nbVal)
 	BEGIN
 		IF (clk'EVENT AND clk='1') THEN
+			--Convert the integer to a 4-bits-vector
 			CASE nbVal IS
 				WHEN 0 =>
-					valBus<="0000";
+					valVec<="0000";
 				WHEN 1 =>
-					valBus<="0001";
+					valVec<="0001";
 				WHEN 2 =>
-					valBus<="0010";
+					valVec<="0010";
 				WHEN 3 =>
-					valBus<="0011";
+					valVec<="0011";
 				WHEN 4 =>
-					valBus<="0100";
+					valVec<="0100";
 				WHEN 5 =>
-					valBus<="0101";
+					valVec<="0101";
 				WHEN 6 =>
-					valBus<="0110";
+					valVec<="0110";
 				WHEN 7 =>
-					valBus<="0111";
+					valVec<="0111";
 				WHEN 8 =>
-					valBus<="1000";
+					valVec<="1000";
 				WHEN 9 =>
-					valBus<="1001";
+					valVec<="1001";
 				WHEN OTHERS =>
-					valBus<="1111";
+					valVec<="1111";
 			END CASE;
 		END IF;
 END PROCESS bin_proc;
 
 
--- Convert the 4 bits in 7 bits (for the segment) --
-convert_bin : PROCESS (clk, valBus)
+
+convert_bin : PROCESS (clk, valVec)
 	BEGIN
 		IF (clk'EVENT AND clk='1') THEN
-			case valBus IS
+			-- Convert the 4 bits-vector into a 7-bits-vector (for the segment)
+			case valVec IS
 				-- 0 --
 				WHEN "0000" =>
 					sgm <= "1000000";
