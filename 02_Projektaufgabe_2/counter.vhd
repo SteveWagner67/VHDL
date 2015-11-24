@@ -114,16 +114,16 @@ count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
 				END IF;
 			
 			
-				--Button to increment the seconds is tasted
-				IF(incSecBtn='0') THEN
-					pushSec<='1';
-				END IF;
+--				--Button to increment the seconds is tasted
+--				IF(incSecBtn='0') THEN
+--					pushSec<='1';
+--				END IF;
 				
 				
-				--Button to increment the minutes is tasted
-				IF(incMinBtn='0') THEN
-					pushMin<='1';
-				END IF;
+--				--Button to increment the minutes is tasted
+--				IF(incMinBtn='0') THEN
+--					pushMin<='1';
+--				END IF;
 				
 				
 				--clear button tasted and rising edge of the clock
@@ -137,8 +137,8 @@ count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
 				END IF;
 
 
-				IF(pushSec='1') THEN
-					--Button should be released to increment and in rising edge of the clock
+--				IF(pushSec='1') THEN
+--					--Button should be released to increment and in rising edge of the clock
 					IF(incSecBtn='1')THEN
 						--value changed
 						valChang<='1';
@@ -159,11 +159,11 @@ count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
 						
 					END IF;
 					
-				END IF;
+--				END IF;
 				
 				
-				IF(pushMin='1') THEN
-					--Button should be released to increment and in rising edge of the clock
+--				IF(pushMin='1') THEN
+--					--Button should be released to increment and in rising edge of the clock
 					IF(incMinBtn='1')THEN
 						--value changed
 						valChang<='1';
@@ -184,17 +184,26 @@ count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
 								
 					END IF;
 					
-					--Save the value if changed
-					IF(valChang='1') THEN
-						valChang<='0';
-						snSecSave<=snSecInt;
-						tSecSave<=tSecInt;
-						snMinSave<=snMinInt;
-						tMinSave<=tMinInt;
-					END IF;
+--					--Save the value if changed
+--					IF(valChang='1') THEN
+--						valChang<='0';
+--						snSecSave<=snSecInt;
+--						tSecSave<=tSecInt;
+--						snMinSave<=snMinInt;
+--						tMinSave<=tMinInt;
+--					END IF;
 					
 					
+--				END IF;
+
+				IF(valChang='1') THEN
+					valChang<='0';
+					snSecSave<=snSecInt;
+					tSecSave<=tSecInt;
+					snMinSave<=snMinInt;
+					tMinSave<=tMinInt;
 				END IF;
+
 				
 				snSecOut<=snSecInt;
 				tSecOut<=tSecInt;

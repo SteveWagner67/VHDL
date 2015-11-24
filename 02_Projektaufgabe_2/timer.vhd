@@ -75,8 +75,21 @@ SIGNAL 	changCnt			:std_logic	:='0';
 SIGNAL 	changDcnt			:std_logic	:='0';
 
 SIGNAL 	tmOv					:std_logic 	:='0'; --debug
+
+SIGNAL	dbcStart			:std_logic:='0'; 			--Start button after deboucing
+SIGNAL 	dbcIncSec		:std_logic:='0';			--Increment second button after debouncing
+SIGNAL 	dbcIncMin		:std_logic:='0';			--Increment minute button after deboucing
+SIGNAL 	dbcClr			:std_logic:='0';			--Clear button after deboucing
 --Component declaration
 
+--Debounce
+COMPONENT debounce 
+PORT(
+		clk50M			:IN			std_logic; 		--Clock 50MHz
+		button			:IN			std_logic;		--Button to debounce
+		push				:OUT			std_logic 		--Real push or not
+	);
+END COMPONENT;
 
 --Frequency
 COMPONENT freqDiv
@@ -179,16 +192,20 @@ BEGIN
 button_proc : PROCESS (clk50MHz, startBtn)
 	BEGIN
 		IF (clk50MHz'EVENT AND clk50MHz='1') THEN
-			IF(startBtn = '0') THEN
-				pushStart<='1';
-			END IF;
-	
-			IF(pushStart='1')THEN
-				--Wait of the start's button is released
-				IF(startBtn='1') THEN
-					pushStart<='0';
-					bStart<= NOT bStart;
-				END IF;
+--			IF(startBtn = '0') THEN
+--				pushStart<='1';
+--			END IF;
+--	
+--			IF(pushStart='1')THEN
+--				--Wait of the start's button is released
+--				IF(startBtn='1') THEN
+--					pushStart<='0';
+--					bStart<= NOT bStart;
+--				END IF;
+--			END IF;
+
+			IF(dbcStart='1') THEN
+				bStart<= NOT bStart;
 			END IF;
 		END IF;
 END PROCESS button_proc;
@@ -212,21 +229,38 @@ END PROCESS timeOver_proc;
 	
 
 --Component Instantiation (the signals in the port map are from the entity or the intern signal declared in this file!)
+
+--Debounce the start button
+startDbc : COMPONENT debounce
+PORT MAP (clk50MHz, startBtn, dbcStart);
+
+--Debounce the increment second button
+incSecDbc : COMPONENT debounce
+PORT MAP (clk50MHz, incSecBtn, dbcIncSec);
+
+--Debounce the increment minute button
+incMinDbc : COMPONENT debounce
+PORT MAP (clk50MHz, incMinBtn, dbcIncMin);
+
+--Debounce the clear button
+clrDbc : COMPONENT debounce
+PORT MAP (clk50MHz, clrBtn, dbcClr);
+
 --Clock 1Hz
 clock1Hz : COMPONENT freqDiv
-PORT MAP (clk50MHz, bStart, 500, clk1Hz); --1.000.000.000ns -> 1s - TEST 1000
+PORT MAP (clk50MHz, bStart, 1000000000, clk1Hz); --1.000.000.000ns -> 1s - TEST 500
 
 --Clock 1/4Hz
 clockQHz : COMPONENT freqDiv
-PORT MAP (clk50MHz, timeOver, 250, clkQ1Hz); --250.000.000 ns -> 250ms - TEST 250
+PORT MAP (clk50MHz, timeOver, 250000000, clkQ1Hz); --250.000.000 ns -> 250ms - TEST 250
 
 --Signal's frequency 3kHz
 freqSignal : COMPONENT freqDiv
-PORT MAP (clk50MHz, bipSig, 33, freq3kHz); --333.333ns - TEST 33
+PORT MAP (clk50MHz, bipSig, 333333, freq3kHz); --333.333ns - TEST 33
 
 --Counter
 count : COMPONENT counter
-PORT MAP (clk50MHz, clrBtn, bStart, incSecBtn, incMinBtn, debug, snSecValOut, tSecValOut, snMinValOut, tMinValOut, timeOver,changDcnt, changCnt, tmOv, snSecValIn, tSecValIn, snMinValIn, tMinValIn);
+PORT MAP (clk50MHz, clrBtn, bStart, dbcIncSec, dbcIncMin, debug, snSecValOut, tSecValOut, snMinValOut, tMinValOut, timeOver,changDcnt, changCnt, tmOv, snSecValIn, tSecValIn, snMinValIn, tMinValIn);
 
 --Decounter
 decount : COMPONENT decounter

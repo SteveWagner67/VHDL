@@ -1,8 +1,8 @@
 --------------------------------------------------
 -- Author: 				Steve Wagner
 -- Matrikelnummer: 	175309
--- Datum: 				23/11/2015
--- Brief:				To debounce each button
+-- Datum: 				13/11/2015
+-- Brief:				To become an 1Hz-frequenz
 --------------------------------------------------
 
 -- Library Declaration --
@@ -14,9 +14,9 @@ USE IEEE.std_logic_1164.ALL;
 --------------------------------------------
 ENTITY debounce IS
 PORT(
-	clk50M			:IN			std_logic; --Clock 50MHz
-	button			:IN			std_logic; --Button to debounce
-	push				:OUT			std_logic --Real push or not
+		clk50M			:IN			std_logic; 		--Clock 50MHz
+		button			:IN			std_logic;		--Button to debounce
+		push				:OUT			std_logic 		--Real push or not
 	);
 END debounce;
 
@@ -25,7 +25,9 @@ END debounce;
 --------------------------------------------
 ARCHITECTURE Behaviour OF debounce IS
 -- Interne signal declaration --
-SIGNAL countClk	: INTEGER 	:= 0; --Variable to count
+SIGNAL countClk	: INTEGER 	:= 0; 				--Variable to count
+
+SIGNAL pushBtn		: std_logic	:='0';
 
 BEGIN
 
@@ -36,18 +38,31 @@ dbc_proc : PROCESS (clk50M, button)
 			--Button pushed
 			IF(button='0') THEN
 				--Increment the clock counter
-				countClk<=countClk+1; 						
+				countClk<=countClk+1;
+			
+				pushBtn<='1';
 
+				
 			--Button released
 			ELSE
-				IF (countClk >= 1) THEN 	--pushing during 10ms means that's a real push(500 because countClk++ every 20ns) --TEST 1
-					push<='1'; --real push
-				ELSE	
-					push<='0'; --bug
+--				IF (countClk >= 1) THEN 	--pushing during 10ms means that's a real push(500 because countClk++ every 20ns) 
+--					push<='1'; --real push
+--				ELSE	
+--					push<='0'; --bug
+--				END IF;
+--				
+				IF(pushBtn='1') THEN
+					IF (countClk >= 500) THEN 	--pushing during 10ms means that's a real push(500 because countClk++ every 20ns) 
+						push<='1'; --real push
+					ELSE	
+						push<='0'; --bug
+					END IF;
 				END IF;
 				
 				countClk<=0;
 			END IF;
+			
+			
 			
 		END IF;
 	

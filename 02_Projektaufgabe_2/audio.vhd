@@ -48,7 +48,7 @@ audio_proc : PROCESS (clk, clkQHz, freqSignal, decValue, timeOver)
 			IF(decValue = 0) AND (timeOver='1')THEN
 			
 				--one minute passed
-				IF(second<4) THEN
+				IF(second<60) THEN
 				
 						--high state of the 250ms period
 						IF(clkQHz='1') THEN
@@ -95,6 +95,7 @@ audio_proc : PROCESS (clk, clkQHz, freqSignal, decValue, timeOver)
 								--1 second passed
 								IF((qSecond mod 4)=0) THEN
 									bipON<= NOT bipON;
+									second<=second+1;
 								END IF;
 -- END TEST modulus OR division
 								
@@ -102,12 +103,16 @@ audio_proc : PROCESS (clk, clkQHz, freqSignal, decValue, timeOver)
 
 
 					
-						END IF;					
+						END IF;	
+				
+				ELSE
+					bipLed<="111111111";
 				END IF;
 			
 				
 			ELSIF (timeOver='0') THEN
 				qSecond<=0;
+				second<=0;
 				bipper<='0';
 				bipLed<="000000000";
 			END IF;
