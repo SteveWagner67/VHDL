@@ -15,14 +15,14 @@ USE IEEE.numeric_std;
 --------------------------------------------
 ENTITY audio IS
 PORT(
-	clk				:IN			std_logic;--Clock 50MHz
-	clkQHz			:IN			std_logic; --Clock 1/4Hz
-	freqSignal		:IN			std_logic; --Signal frequency
+		clk				:IN			std_logic;		--Clock 50MHz
+		clkQHz			:IN			std_logic; 		--Clock 1/4Hz
+		freqSignal		:IN			std_logic;		--Signal frequency
 	
-	timeOver			:IN			std_logic; --Time over coming from the decounter
-
-	bipLed			:OUT			std_logic_vector(8 downto 0); --Leds to simulate the bipper 
-	bipper			:OUT			std_logic  --Bipper when the timer is over
+		timeOver			:IN			std_logic; 		--Time over
+	
+		bipLed			:OUT			std_logic_vector(8 downto 0); --Led to show the end of the decounter
+		bipper			:OUT			std_logic		--Bipper
 	);
 END audio;
 
@@ -31,12 +31,12 @@ END audio;
 --------------------------------------------
 ARCHITECTURE Behaviour OF audio IS
 --Intern signal declaration
-SIGNAL qSecond		:INTEGER 	:=0; --250ms's counter
-SIGNAL second		:INTEGER 	:=0; -- 1 second's counter
+SIGNAL 		qSecond			:INTEGER 	:=0; 		--250ms's counter
+SIGNAL 		second			:INTEGER 	:=0; 		-- 1 second's counter
 
-SIGNAL bipON		:std_logic	:='0'; --State of the bip
+SIGNAL 		bipON				:std_logic:='0'; 		--State of the bip
 
-SIGNAL precState		:std_logic  :='1'; --Precedent state of the 1/4-Hz-Clock
+SIGNAL 		precState		:std_logic:='1'; 		--Precedent state of the 1/4-Hz-Clock
 
 BEGIN
 
@@ -60,13 +60,15 @@ audio_proc : PROCESS (clk, clkQHz, freqSignal, timeOver)
 								--High state of the signal's frequency 
 								IF(freqSignal='1') THEN
 									bipLed<="111111111";
-									bipper<='1';
+									--bipper<='1';
 									
 								--Low state of the signal's frequency 	
 								ELSE
 									bipLed<="000000000";
-									bipper<='0';
+									--bipper<='0';
 								END IF;
+								
+								bipper<='1';
 								
 							--Bip OFF
 							ELSE

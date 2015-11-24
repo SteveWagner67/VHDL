@@ -14,28 +14,27 @@ USE IEEE.numeric_std;
 --------------------------------------------
 ENTITY counter IS
 PORT(
-	clk				:IN			std_logic;--Clock 50MHz
-	clr			:IN			std_logic; --State of the clear button
-	start			:IN			std_logic; --State of start/stop button 
-	incSec		:IN			std_logic; --State of increment second's button
-	incMin		:IN			std_logic; --State of increment minute's button
+		clk				:IN			std_logic;		--Clock 50MHz
+		clr				:IN			std_logic;		--State of the clear button
+		start				:IN			std_logic; 		--State of start/stop button 
+		incSec			:IN			std_logic; 		--State of increment second's button
+		incMin			:IN			std_logic; 		--State of increment minute's button
 
-	snSecIn			:IN 				INTEGER; --Single number of the second coming from the decounter
-	tSecIn			:IN 				INTEGER; --Tens of the second coming from the decounter
-	snMinIn			:IN 				INTEGER; --Single number of the minute coming from the decounter
-	tMinIn			:IN 				INTEGER; --Tens of the minute coming from the decounter
+		snSecIn			:IN 			INTEGER; 		--Single number of the second coming from the decounter
+		tSecIn			:IN 			INTEGER; 		--Tens of the second coming from the decounter
+		snMinIn			:IN 			INTEGER; 		--Single number of the minute coming from the decounter
+		tMinIn			:IN 			INTEGER; 		--Tens of the minute coming from the decounter
 	
-	timeOver			:IN				std_logic; --Time over coming from the decounter
+		timeOver			:IN			std_logic; 		--Time over coming from the decounter
 	
+		changeIn			:IN			std_logic; 		--Change coming from the decounter
+		
+		changeOut		:OUT			std_logic; 		--Change of the counter going to the decounter
 	
-	changeIn		:IN				std_logic; --Change coming from the decounter
-	
-	changeOut			:OUT				std_logic; --Change of the counter going to the decounter
-	
-	snSecOut			:OUT 				INTEGER;--Single number of the second going to the decounter
-	tSecOut			:OUT 				INTEGER; --Tens of the second coming going to the decounter
-	snMinOut			:OUT 				INTEGER;--Single number of the minute going to the decounter
-	tMinOut			:OUT 				INTEGER --Tens of the minute going to the decounter
+		snSecOut			:OUT 			INTEGER;			--Single number of the second going to the decounter
+		tSecOut			:OUT 			INTEGER; 		--Tens of the second coming going to the decounter
+		snMinOut			:OUT 			INTEGER;			--Single number of the minute going to the decounter
+		tMinOut			:OUT 			INTEGER 			--Tens of the minute going to the decounter
 	);
 END counter;
 
@@ -46,24 +45,22 @@ ARCHITECTURE Behaviour OF counter IS
 -- Interne signal declaration --
 
 --Intern value
-SIGNAL snSec			:INTEGER		:=0;
-SIGNAL tSec				:INTEGER		:=0;
-SIGNAL snMin			:INTEGER		:=0;
-SIGNAL tMin				:INTEGER		:=0;
+SIGNAL 	snSec					:INTEGER		:=0;		--Single number of the second used internal
+SIGNAL	 tSec					:INTEGER		:=0;		--Tens of the second used internal
+SIGNAL 	snMin					:INTEGER		:=0;		--Single number of the minute used internal
+SIGNAL 	tMin					:INTEGER		:=0;		--Tens of the minute used internal
 
 
-SIGNAL 	snSecSave	:INTEGER		:=0;	--Single number value for the seconds
-SIGNAL	tSecSave		:INTEGER		:=0;	--Tens value for the seconds
-SIGNAL	snMinSave		:INTEGER		:=0;	--Single number value for the minutes
-SIGNAL	tMinSave		:INTEGER		:=0;	--Tens value for the minutes
+SIGNAL 	snSecSave			:INTEGER		:=0;		--Single number value for the seconds for saving the time
+SIGNAL	tSecSave				:INTEGER		:=0;		--Tens value for the seconds for saving the time
+SIGNAL	snMinSave			:INTEGER		:=0;		--Single number value for the minutes for saving the time
+SIGNAL	tMinSave				:INTEGER		:=0;		--Tens value for the minutes for saving the time
 
-SIGNAL 	tmOv					:std_logic 	:='0';
+SIGNAL 	tmOv					:std_logic :='0';		--Save when the timer is over
 
-SIGNAL 	change		:std_logic:='0';
+SIGNAL 	change				:std_logic:='0';		--change used internal
 
-SIGNAL 	precState	:std_logic :='0';
-
-
+SIGNAL 	precState			:std_logic:='0';		--Last state of the start/stop
 
 BEGIN
 

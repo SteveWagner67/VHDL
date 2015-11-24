@@ -12,9 +12,9 @@ USE IEEE.numeric_std;
 
 ENTITY display IS
 PORT(
-		clk			:IN			std_logic;--Clock 50MHz
-		nb			:IN		INTEGER;--Number to display
-		sgm			:OUT 		std_logic_vector(6 downto 0)--7-bits-vector number for the segment (g downto a)
+		clk				:IN			std_logic;		--Clock 50MHz
+		nb					:IN			INTEGER;			--Number to display
+		sgm				:OUT 			std_logic_vector(6 downto 0)	--7-bits-vector number for the segment (g downto a)
 	);
 END display;
 

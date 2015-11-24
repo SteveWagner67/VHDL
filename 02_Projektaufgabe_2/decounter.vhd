@@ -15,37 +15,38 @@ USE IEEE.numeric_std;
 --------------------------------------------
 ENTITY decounter IS
 PORT(
-		clk			:IN		std_logic;--Clock 50MHz
-		clk1Hz		:IN		std_logic;--Clock 1Hz
-		start		:IN		std_logic;--State of Start/stop
+		clk				:IN			std_logic;		--Clock 50MHz
+		clk1Hz			:IN			std_logic;		--Clock 1Hz
+		start				:IN			std_logic;		--State of Start/stop
 
-		snSecIn		:IN		INTEGER;--Single number of the second coming from the counter
-		tSecIn		:IN 		INTEGER;--Tens of the second coming from the counter
-		snMinIn		:IN 		INTEGER;--Single number of the minute coming from the counter
-		tMinIn		:IN 		INTEGER;--Tens of the minute coming from the counter
+		snSecIn			:IN			INTEGER;			--Single number of the second coming from the counter
+		tSecIn			:IN 			INTEGER;			--Tens of the second coming from the counter
+		snMinIn			:IN 			INTEGER;			--Single number of the minute coming from the counter
+		tMinIn			:IN 			INTEGER;			--Tens of the minute coming from the counter
 		
-		changeIn		:IN		std_logic;--Change coming from the counter
+		changeIn			:IN			std_logic;		--Change coming from the counter
 		
-		changeOut		:OUT		std_logic;--Change going to the counter
+		changeOut		:OUT			std_logic;		--Change going to the counter
 		
-		timeOver		:OUT		std_logic;--Time over going to the audio, the counter and the freqDiv
+		timeOver			:OUT			std_logic;		--Time over going to the audio, the counter and the freqDiv
 		
-		snSecOut		:OUT		INTEGER;--Single number of the second going to the display and the counter
-		tSecOut		:OUT 		INTEGER;--Tens of the second going to the display and the counter
-		snMinOut		:OUT 		INTEGER;--Single number of the minute going to the display and the counter
-		tMinOut		:OUT 		INTEGER--Tens of the minute going to the display and the counter
+		snSecOut			:OUT			INTEGER;			--Single number of the second going to the display and the counter
+		tSecOut			:OUT 			INTEGER;			--Tens of the second going to the display and the counter
+		snMinOut			:OUT 			INTEGER;			--Single number of the minute going to the display and the counter
+		tMinOut			:OUT 			INTEGER			--Tens of the minute going to the display and the counter
 	 );
 END decounter;
 
 
 ARCHITECTURE Behaviour OF decounter IS
 --- Intern Signal Declaration ----
-SIGNAL precState		:std_logic :='1'; --Precedent state of the 1-Hz-clock
+SIGNAL 		precState		:std_logic:='1'; 		--Precedent state of the 1-Hz-clock
 
-SIGNAL snSec		 :INTEGER	:=0; --Single number of the second used internal
-SIGNAL tSec 		 :INTEGER	:=0; --Tens of the second used internal
-SIGNAL snMin		 :INTEGER	:=0; --Single number of the minute used internal
-SIGNAL tMin			 :INTEGER	:=0; --Tens of the minute used internal
+SIGNAL 		snSec				 :INTEGER	:=0; 		--Single number of the second used internal
+SIGNAL 		tSec 				 :INTEGER	:=0; 		--Tens of the second used internal
+SIGNAL 		snMin				 :INTEGER	:=0; 		--Single number of the minute used internal
+SIGNAL 		tMin				 :INTEGER	:=0; 		--Tens of the minute used internal
+
 
 BEGIN
 

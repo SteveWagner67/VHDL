@@ -14,10 +14,10 @@ USE IEEE.std_logic_1164.ALL;
 --------------------------------------------
 ENTITY freqDiv IS
 PORT(
-	clk50M			:IN			std_logic; --Clock 50MHz
-	en					:IN			std_logic; --Enable the clock
-	periodns			:IN			INTEGER; --Period of the signal in ns
-	clkOut			:OUT			std_logic--Clock state
+		clk50M			:IN			std_logic;		--Clock 50MHz
+		en					:IN			std_logic;		--Enable the clock
+		periodns			:IN			INTEGER; 		--Period of the signal in ns
+		clkOut			:OUT			std_logic 		--Clock output
 	);
 END freqDiv;
 
@@ -26,8 +26,8 @@ END freqDiv;
 --------------------------------------------
 ARCHITECTURE Behaviour OF freqDiv IS
 -- Interne signal declaration --
-SIGNAL countClk	: INTEGER 	:= 0; --Variable to count
-SIGNAL state		: std_logic := '0'; --Variable for the counter in second
+SIGNAL 		countClk			:INTEGER 	:=0; 				--Variable to count
+SIGNAL 		state				: std_logic:='0'; --Variable for the counter in second
 
 BEGIN
 
