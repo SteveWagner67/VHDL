@@ -18,11 +18,11 @@ PORT(
 	clk				:IN			std_logic;--Clock 50MHz
 	clkQHz			:IN			std_logic; --Clock 1/4Hz
 	freqSignal		:IN			std_logic; --Signal frequency
-	timeOver			:IN			std_logic; --Time over
-	decValue			:IN			INTEGER; --Value of the decounter
-	bipLed			:OUT			std_logic_vector(8 downto 0); --Led to show the end of the decounter
-	debug				:OUT			INTEGER;
-	bipper			:OUT			std_logic
+	
+	timeOver			:IN			std_logic; --Time over coming from the decounter
+
+	bipLed			:OUT			std_logic_vector(8 downto 0); --Leds to simulate the bipper 
+	bipper			:OUT			std_logic  --Bipper when the timer is over
 	);
 END audio;
 
@@ -31,85 +31,77 @@ END audio;
 --------------------------------------------
 ARCHITECTURE Behaviour OF audio IS
 --Intern signal declaration
-SIGNAL qSecond		:INTEGER 	:=0;
-SIGNAL second		:INTEGER 	:=0;
-SIGNAL internBip	:std_logic	:='0';
-SIGNAL bipON		:std_logic	:='0';
+SIGNAL qSecond		:INTEGER 	:=0; --250ms's counter
+SIGNAL second		:INTEGER 	:=0; -- 1 second's counter
 
-SIGNAL prevClk		:std_logic  :='1';
+SIGNAL bipON		:std_logic	:='0'; --State of the bip
+
+SIGNAL precState		:std_logic  :='1'; --Precedent state of the 1/4-Hz-Clock
 
 BEGIN
 
 
-audio_proc : PROCESS (clk, clkQHz, freqSignal, decValue, timeOver)
+audio_proc : PROCESS (clk, clkQHz, freqSignal, timeOver)
 	BEGIN
 		IF (clk'EVENT AND clk='1') THEN
-			--end of the counter and in start
-			IF(decValue = 0) AND (timeOver='1')THEN
+			--Time is over
+			IF(timeOver='1')THEN
 			
 				--one minute passed
 				IF(second<60) THEN
 				
-						--high state of the 250ms period
+						--high state of the 1/4-Hz-Clock
 						IF(clkQHz='1') THEN
-							prevClk<='1';
+							--Change the precedent state of the 1/4-Hz-Clock
+							precState<='1';
 						
 							--Bip ON
 							IF(bipON = '1') THEN
+								--High state of the signal's frequency 
 								IF(freqSignal='1') THEN
 									bipLed<="111111111";
+									bipper<='1';
 									
+								--Low state of the signal's frequency 	
 								ELSE
 									bipLed<="000000000";
+									bipper<='0';
 								END IF;
 								
-								bipper<='1';
-							
 							--Bip OFF
 							ELSE
 								bipLed<="000000000";
 								bipper<='0';
 							END IF;
 							
-						--low state of the 250ms period	
+						--Low state of the 250ms period	
 						ELSE	
-							--In all case in the low state of the period
 							bipLed<="000000000";
 							bipper<='0';
 
 							
-							--allow to increment the QSec every 250ms and not every 20ns (each rising edge of clk50Mhz)
-							If(prevClk='1') THEN
-								prevClk<='0';
+							--Increment the counter each 1/4-Hz-clock
+							If(precState='1') THEN
+								--Change the precedent state of the 1/4-Hz-Clock
+								precState<='0';
 								qSecond<=qSecond+1;
 								
--- TEST AndLogic
---								IF(qSecond>=4) THEN
---									second<=second+1;
---									qSecond<=1;
---									bipON<= NOT bipOn;
---								END IF;
--- END TEST AndLogic	
-
--- TEST modulus OR division
 								--1 second passed
 								IF((qSecond mod 4)=0) THEN
 									bipON<= NOT bipON;
 									second<=second+1;
 								END IF;
--- END TEST modulus OR division
 								
 							END IF;
-
-
 					
 						END IF;	
-				
+				--60 second passed
 				ELSE
+					--To show that the 60 sec passed
 					bipLed<="111111111";
 				END IF;
 			
-				
+			--Timer isn't over	
 			ELSIF (timeOver='0') THEN
 				qSecond<=0;
 				second<=0;
@@ -117,8 +109,6 @@ audio_proc : PROCESS (clk, clkQHz, freqSignal, decValue, timeOver)
 				bipLed<="000000000";
 			END IF;
 		END IF;
-		
-		debug<=qSecond;
 		
 END PROCESS audio_proc;
 				

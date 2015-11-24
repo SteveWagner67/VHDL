@@ -105,32 +105,28 @@ END COMPONENT;
 --Counter
 COMPONENT counter
 PORT(
-	clk					:IN			std_logic;--Clock 50MHz
-	clrBtn				:IN			std_logic;--Button Clear
-	bStart				:IN			std_logic;--State of start/stop button
-	incSecBtn			:IN			std_logic;--Button for increment of the seconds
-	incMinBtn			:IN			std_logic;--Button for increment of the minutes
-	
-	debug				:OUT	std_logic;
+	clk				:IN			std_logic;--Clock 50MHz
+	clr			:IN			std_logic; --State of the clear button
+	start			:IN			std_logic; --State of start/stop button 
+	incSec		:IN			std_logic; --State of increment second's button
+	incMin		:IN			std_logic; --State of increment minute's button
 
+	snSecIn			:IN 				INTEGER; --Single number of the second coming from the decounter
+	tSecIn			:IN 				INTEGER; --Tens of the second coming from the decounter
+	snMinIn			:IN 				INTEGER; --Single number of the minute coming from the decounter
+	tMinIn			:IN 				INTEGER; --Tens of the minute coming from the decounter
 	
-	snSecIn			:IN 				INTEGER;
-	tSecIn			:IN 				INTEGER;
-	snMinIn			:IN 				INTEGER;
-	tMinIn			:IN 				INTEGER;
+	timeOver			:IN				std_logic; --Time over coming from the decounter
 	
-	timeOver			:IN				std_logic;
 	
-	vChangeIn		:IN				std_logic;
+	changeIn		:IN				std_logic; --Change coming from the decounter
 	
-	vChangOut			:OUT				std_logic;
+	changeOut			:OUT				std_logic; --Change of the counter going to the decounter
 	
-	tmOver			:OUT				std_logic; --debug
-	
-	snSecOut			:OUT 				INTEGER;
-	tSecOut			:OUT 				INTEGER;
-	snMinOut			:OUT 				INTEGER;
-	tMinOut			:OUT 				INTEGER
+	snSecOut			:OUT 				INTEGER;--Single number of the second going to the decounter
+	tSecOut			:OUT 				INTEGER; --Tens of the second coming going to the decounter
+	snMinOut			:OUT 				INTEGER;--Single number of the minute going to the decounter
+	tMinOut			:OUT 				INTEGER --Tens of the minute going to the decounter
 	);
 END COMPONENT;
 
@@ -138,23 +134,25 @@ END COMPONENT;
 --Decounter
 COMPONENT decounter
 PORT(
-		clk				:IN			std_logic;--Clock 50MHz
-		clk1Hz			:IN			std_logic;--Clock 1Hz
-		startBtn			:IN			std_logic;--Button for Start/Stop
+		clk			:IN		std_logic;--Clock 50MHz
+		clk1Hz		:IN		std_logic;--Clock 1Hz
+		start		:IN		std_logic;--State of Start/stop
 
-		snSecIn		:IN		INTEGER;--Single number value for the seconds
-		tSecIn		:IN 		INTEGER;--Tens value for the seconds
-		snMinIn		:IN 		INTEGER;--Single number value for the minutes
-		tMinIn		:IN 		INTEGER;--Tens value for the minutes	
-
-		changIn		:IN		std_logic;
+		snSecIn		:IN		INTEGER;--Single number of the second coming from the counter
+		tSecIn		:IN 		INTEGER;--Tens of the second coming from the counter
+		snMinIn		:IN 		INTEGER;--Single number of the minute coming from the counter
+		tMinIn		:IN 		INTEGER;--Tens of the minute coming from the counter
 		
-		changOut		:OUT		std_logic;
+		changeIn		:IN		std_logic;--Change coming from the counter
 		
-		snSecOut		:OUT		INTEGER;--Single number value for the seconds
-		tSecOut		:OUT 		INTEGER;--Tens value for the seconds
-		snMinOut		:OUT 		INTEGER;--Single number value for the minutes
-		tMinOut		:OUT 		INTEGER--Tens value for the minutes	
+		changeOut		:OUT		std_logic;--Change going to the counter
+		
+		timeOver		:OUT		std_logic;--Time over going to the audio, the counter and the freqDiv
+		
+		snSecOut		:OUT		INTEGER;--Single number of the second going to the display and the counter
+		tSecOut		:OUT 		INTEGER;--Tens of the second going to the display and the counter
+		snMinOut		:OUT 		INTEGER;--Single number of the minute going to the display and the counter
+		tMinOut		:OUT 		INTEGER--Tens of the minute going to the display and the counter
 	 );
 END COMPONENT;
 
@@ -162,9 +160,9 @@ END COMPONENT;
 --Display on 7-Segment
 COMPONENT display
 PORT(
-		clk					:IN			std_logic;--Clock 50MHz
-		nbVal				:IN			INTEGER;--Value at integer of a number
-		sgm				:OUT 			std_logic_vector(6 downto 0)--Value in  bits for the segment (g downto a)
+		clk			:IN			std_logic;--Clock 50MHz
+		nb			:IN		INTEGER;--Number to display
+		sgm			:OUT 		std_logic_vector(6 downto 0)--7-bits-vector number for the segment (g downto a)
 	);
 END COMPONENT;
 
@@ -172,14 +170,14 @@ END COMPONENT;
 --Audio
 COMPONENT audio
 PORT(
-	clk					:IN			std_logic;--Clock 50MHz
-	clkQHz				:IN			std_logic; --Clock 1/4Hz
-	freqSignal			:IN			std_logic; --Signal frequency
-	timeOver				:IN			std_logic; --Time over
-	decValue				:IN			INTEGER; --Value of the decounter
-	bipLed				:OUT			std_logic_vector(8 downto 0); --Led to show the end of the decounter
-	debug			:OUT			INTEGER;
-	bipper				:OUT			std_logic
+	clk				:IN			std_logic;--Clock 50MHz
+	clkQHz			:IN			std_logic; --Clock 1/4Hz
+	freqSignal		:IN			std_logic; --Signal frequency
+	
+	timeOver			:IN			std_logic; --Time over
+	
+	bipLed			:OUT			std_logic_vector(8 downto 0); --Led to show the end of the decounter
+	bipper			:OUT			std_logic
 	);
 END COMPONENT;
 
@@ -192,41 +190,14 @@ BEGIN
 button_proc : PROCESS (clk50MHz, startBtn)
 	BEGIN
 		IF (clk50MHz'EVENT AND clk50MHz='1') THEN
---			IF(startBtn = '0') THEN
---				pushStart<='1';
---			END IF;
---	
---			IF(pushStart='1')THEN
---				--Wait of the start's button is released
---				IF(startBtn='1') THEN
---					pushStart<='0';
---					bStart<= NOT bStart;
---				END IF;
---			END IF;
-
+		
 			IF(dbcStart='1') THEN
 				bStart<= NOT bStart;
 			END IF;
+			
 		END IF;
 END PROCESS button_proc;
 
-
-
-timeOver_proc : PROCESS (clk50MHz, bStart, snSecValOut, tSecValOut, snMinValOut, tMinValOut)
-	BEGIN
-		--Time is over
-		IF (clk50MHz'EVENT AND clk50MHz='1') THEN
-			IF (snSecValOut=0) AND (tSecValOut=0) AND (snMinValOut=0) AND (tMinValOut=0) AND (bStart='1') THEN
-				timeOver<='1';
-			ELSE
-				timeOver<='0';		
-			END IF;
-		END IF;
-END PROCESS timeOver_proc;
-
-
-
-	
 
 --Component Instantiation (the signals in the port map are from the entity or the intern signal declared in this file!)
 
@@ -260,11 +231,11 @@ PORT MAP (clk50MHz, bipSig, 333333, freq3kHz); --333.333ns - TEST 33
 
 --Counter
 count : COMPONENT counter
-PORT MAP (clk50MHz, clrBtn, bStart, dbcIncSec, dbcIncMin, debug, snSecValOut, tSecValOut, snMinValOut, tMinValOut, timeOver,changDcnt, changCnt, tmOv, snSecValIn, tSecValIn, snMinValIn, tMinValIn);
+PORT MAP (clk50MHz, dbcClr, bStart, dbcIncSec, dbcIncMin, snSecValOut, tSecValOut, snMinValOut, tMinValOut, timeOver,changDcnt, changCnt, snSecValIn, tSecValIn, snMinValIn, tMinValIn);
 
 --Decounter
 decount : COMPONENT decounter
-PORT MAP (clk50MHz, clk1Hz, bStart, snSecValIn, tSecValIn, snMinValIn, tMinValIn, changCnt, changDcnt, snSecValOut, tSecValOut, snMinValOut, tMinValOut);
+PORT MAP (clk50MHz, clk1Hz, bStart, snSecValIn, tSecValIn, snMinValIn, tMinValIn, changCnt, changDcnt, timeOver, snSecValOut, tSecValOut, snMinValOut, tMinValOut);
 
 --Display the single numbers of a second on a segment
 dispSnSec: COMPONENT display
@@ -284,7 +255,7 @@ PORT MAP (clk50MHz, tMinValOut, tmSeg);
 
 --Audio
 bipper : COMPONENT audio
-PORT MAP (clk50MHz, clkQ1Hz, freq3kHz, timeOver, decValue, endIndicLed, qSecond, bipSig);
+PORT MAP (clk50MHz, clkQ1Hz, freq3kHz, timeOver, endIndicLed, bipSig);
 
 
 

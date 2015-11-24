@@ -1,8 +1,8 @@
 --------------------------------------------------
 -- Author: 				Steve Wagner
 -- Matrikelnummer: 	175309
--- Datum: 				13/11/2015
--- Brief:				To become an 1Hz-frequenz
+-- Datum: 				23/11/2015
+-- Brief:				Debounce each button
 --------------------------------------------------
 
 -- Library Declaration --
@@ -44,13 +44,8 @@ dbc_proc : PROCESS (clk50M, button)
 
 				
 			--Button released
-			ELSE
---				IF (countClk >= 1) THEN 	--pushing during 10ms means that's a real push(500 because countClk++ every 20ns) 
---					push<='1'; --real push
---				ELSE	
---					push<='0'; --bug
---				END IF;
---				
+			ELSE	
+				--Last state of the button was a push
 				IF(pushBtn='1') THEN
 					IF (countClk >= 500) THEN 	--pushing during 10ms means that's a real push(500 because countClk++ every 20ns) 
 						push<='1'; --real push
@@ -60,9 +55,7 @@ dbc_proc : PROCESS (clk50M, button)
 				END IF;
 				
 				countClk<=0;
-			END IF;
-			
-			
+			END IF;			
 			
 		END IF;
 	

@@ -17,7 +17,7 @@ PORT(
 	clk50M			:IN			std_logic; --Clock 50MHz
 	en					:IN			std_logic; --Enable the clock
 	periodns			:IN			INTEGER; --Period of the signal in ns
-	clkOut			:OUT			std_logic--Clock output
+	clkOut			:OUT			std_logic--Clock state
 	);
 END freqDiv;
 
@@ -36,27 +36,27 @@ BEGIN
 clk_proc : PROCESS (clk50M, en)
 	BEGIN
 		IF(clk50M'EVENT AND clk50M='1') THEN
+			--Start the counter for the x-Hz-clock
 			IF(en='1') THEN
 				--Increment the clock counter
 				countClk<=countClk+1; 						
 
 			ELSE
+				--Low state of the x-Hz-clock
 				state<='0';
+			END IF;			
+			
+			--If a half of the whishes period occured 
+			IF (countClk >= (periodns/40)) THEN 	--40 because 50Mhz -> 20ns and to have an half a period
+				--Toggle the state of the x-Hz-clock
+				state <= NOT state;
+				countClk<=0;
+						
 			END IF;
 			
-			
+			--Send the state of the x-Hz-clock 
 			clkOut<=state;
-			
 		END IF;
-		
-		IF (countClk >= (periodns/40)) AND (clk50M'EVENT AND clk50M='1') THEN 	--40 because 50Mhz -> 20ns and to have an half a period
-			state <= NOT state;
-			countClk<=0;
-			
-			
-			
-		END IF;
-		
 		
 		
 		

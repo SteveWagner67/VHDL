@@ -15,32 +15,27 @@ USE IEEE.numeric_std;
 ENTITY counter IS
 PORT(
 	clk				:IN			std_logic;--Clock 50MHz
-	clrBtn			:IN			std_logic; --Button Clear
-	bStart			:IN			std_logic; --State of start/stop button 
-	incSecBtn		:IN			std_logic; --Button to increment the seconds
-	incMinBtn		:IN			std_logic; --Button to increment the minutes
-	
-	debug				:OUT			std_logic;
+	clr			:IN			std_logic; --State of the clear button
+	start			:IN			std_logic; --State of start/stop button 
+	incSec		:IN			std_logic; --State of increment second's button
+	incMin		:IN			std_logic; --State of increment minute's button
 
-	snSecIn			:IN 				INTEGER;
-	tSecIn			:IN 				INTEGER;
-	snMinIn			:IN 				INTEGER;
-	tMinIn			:IN 				INTEGER;
+	snSecIn			:IN 				INTEGER; --Single number of the second coming from the decounter
+	tSecIn			:IN 				INTEGER; --Tens of the second coming from the decounter
+	snMinIn			:IN 				INTEGER; --Single number of the minute coming from the decounter
+	tMinIn			:IN 				INTEGER; --Tens of the minute coming from the decounter
 	
-	timeOver			:IN				std_logic;
-	
-	
-	vChangeIn		:IN				std_logic;
-	
-	vChangOut			:OUT				std_logic;
+	timeOver			:IN				std_logic; --Time over coming from the decounter
 	
 	
-	tmOver			:OUT				std_logic; --debug
+	changeIn		:IN				std_logic; --Change coming from the decounter
 	
-	snSecOut			:OUT 				INTEGER;
-	tSecOut			:OUT 				INTEGER;
-	snMinOut			:OUT 				INTEGER;
-	tMinOut			:OUT 				INTEGER
+	changeOut			:OUT				std_logic; --Change of the counter going to the decounter
+	
+	snSecOut			:OUT 				INTEGER;--Single number of the second going to the decounter
+	tSecOut			:OUT 				INTEGER; --Tens of the second coming going to the decounter
+	snMinOut			:OUT 				INTEGER;--Single number of the minute going to the decounter
+	tMinOut			:OUT 				INTEGER --Tens of the minute going to the decounter
 	);
 END counter;
 
@@ -49,19 +44,12 @@ END counter;
 --------------------------------------------
 ARCHITECTURE Behaviour OF counter IS
 -- Interne signal declaration --
-SIGNAL countSec 		:INTEGER		:=0;--Counter for the seconds
-SIGNAL countMin 		:INTEGER 	:=0;--Counter for the minutes
-SIGNAL internCount	:INTEGER   	:=0;
-
-
-SIGNAl pushSec			:std_logic	:='0';
-SIGNAL pushMin			:std_logic	:='0';
 
 --Intern value
-SIGNAL snSecInt			:INTEGER		:=0;
-SIGNAL tSecInt				:INTEGER		:=0;
-SIGNAL snMinInt			:INTEGER		:=0;
-SIGNAL tMinInt				:INTEGER		:=0;
+SIGNAL snSec			:INTEGER		:=0;
+SIGNAL tSec				:INTEGER		:=0;
+SIGNAL snMin			:INTEGER		:=0;
+SIGNAL tMin				:INTEGER		:=0;
 
 
 SIGNAL 	snSecSave	:INTEGER		:=0;	--Single number value for the seconds
@@ -71,16 +59,16 @@ SIGNAL	tMinSave		:INTEGER		:=0;	--Tens value for the minutes
 
 SIGNAL 	tmOv					:std_logic 	:='0';
 
-SIGNAL 	valChang		:std_logic:='0';
+SIGNAL 	change		:std_logic:='0';
 
-SIGNAL 	statePrec	:std_logic :='0';
+SIGNAL 	precState	:std_logic :='0';
 
 
 
 BEGIN
 
 -- Count second Process --
-count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
+count_sec_proc : PROCESS (clk, clr, start, incSec, incMin)
 	BEGIN
 		IF(clk'EVENT AND clk='1') THEN
 			--if in a moment the time is over save it
@@ -89,134 +77,106 @@ count_sec_proc : PROCESS (clk, clrBtn, bStart, incSecBtn, incMinBtn)
 			END IF;
 			
 			--Stop state
-			IF(bStart='0')THEN
+			IF(start='0')THEN
 
-				--Value of the decounter has changed
-				IF(vChangeIn='1') THEN
+				--Change of the time coming from the decounter -> timer isn't over anymore
+				IF(changeIn='1') THEN
 					tmOv<='0';
 				END IF;
 			
 			
-				--If the timer was over
+				--If the timer was over -> begin the counter with the last saved value
 				IF(tmOv='1') THEN
-					snSecInt<=snSecSave;
-					tSecInt<=tSecSave;
-					snMinInt<=snMinSave;
-					tMinInt<=tMinSave;
-					valChang<='1';
-				--timer isn't over and last state was a start
-				ELSIF (tmOv='0') AND (statePrec='1') THEN
-					statePrec<='0';
-					snSecInt<=snSecIn;
-					tSecInt<=tSecIn;
-					snMinInt<=snMinIn;
-					tMinInt<=tMinIn;
+					snSec<=snSecSave;
+					tSec<=tSecSave;
+					snMin<=snMinSave;
+					tMin<=tMinSave;
+					change<='1';
+				--timer isn't over and last state was a start -> begin the counter with the value coming from the decounter
+				ELSIF (tmOv='0') AND (precState='1') THEN
+					--Last state is a stop
+					precState<='0';
+					snSec<=snSecIn;
+					tSec<=tSecIn;
+					snMin<=snMinIn;
+					tMin<=tMinIn;
 				END IF;
-			
-			
---				--Button to increment the seconds is tasted
---				IF(incSecBtn='0') THEN
---					pushSec<='1';
---				END IF;
-				
-				
---				--Button to increment the minutes is tasted
---				IF(incMinBtn='0') THEN
---					pushMin<='1';
---				END IF;
-				
-				
-				--clear button tasted and rising edge of the clock
-				IF(clrBtn='0')THEN
-					snSecInt<=0;
-					tSecInt<=0;
-					snMinInt<=0;
-					tMinInt<=0;
-					--Value change
-					valChang<='1';
-				END IF;
-
-
---				IF(pushSec='1') THEN
---					--Button should be released to increment and in rising edge of the clock
-					IF(incSecBtn='1')THEN
-						--value changed
-						valChang<='1';
-						pushSec<='0';
-						IF(snSecInt=9) THEN
-							IF(tSecInt=5) THEN
-								tSecInt<=0;
-							
-							ELSE
-								tSecInt<=tSecInt+1;
-							END IF;
-						
-							snSecInt<=0;
-						
-						ELSE
-							snSecInt<=snSecInt+1;
-						END IF;
-						
-					END IF;
-					
---				END IF;
-				
-				
---				IF(pushMin='1') THEN
---					--Button should be released to increment and in rising edge of the clock
-					IF(incMinBtn='1')THEN
-						--value changed
-						valChang<='1';
-						pushMin<='0';
-						IF(snMinInt=9) THEN
-							IF(tMinInt=9) THEN
-								tMinInt<=0;
-							
-							ELSE
-								tMinInt<=tMinInt+1;
-							END IF;
-						
-							snMinInt<=0;
-						
-						ELSE
-							snMinInt<=snMinInt+1;
-						END IF;
 								
-					END IF;
-					
---					--Save the value if changed
---					IF(valChang='1') THEN
---						valChang<='0';
---						snSecSave<=snSecInt;
---						tSecSave<=tSecInt;
---						snMinSave<=snMinInt;
---						tMinSave<=tMinInt;
---					END IF;
-					
-					
---				END IF;
-
-				IF(valChang='1') THEN
-					valChang<='0';
-					snSecSave<=snSecInt;
-					tSecSave<=tSecInt;
-					snMinSave<=snMinInt;
-					tMinSave<=tMinInt;
+				--State of the debounced clr button is a high state
+				IF(clr='1')THEN
+					snSec<=0;
+					tSec<=0;
+					snMin<=0;
+					tMin<=0;
+					--Time changed
+					change<='1';
 				END IF;
 
+				--State of the debounced increment second button is a high state
+				IF(incSec='1')THEN
+					IF(snSec=9) THEN
+						IF(tSec=5) THEN
+							tSec<=0;
+							
+						ELSE
+							tSec<=tSec+1;
+						END IF;
+						
+						snSec<=0;
+						
+					ELSE
+						snSec<=snSec+1;
+					END IF;
+					
+					--Time changed
+					change<='1';
+						
+				END IF;
 				
-				snSecOut<=snSecInt;
-				tSecOut<=tSecInt;
-				snMinOut<=snMinInt;
-				tMinOut<=tMinInt;						
-			--start
+				--State of the debounced increment minute button is a high state
+				IF(incMin='1')THEN
+					
+					IF(snMin=9) THEN
+						IF(tMin=9) THEN
+							tMin<=0;
+							
+						ELSE
+							tMin<=tMin+1;
+						END IF;
+						
+						snMin<=0;
+						
+					ELSE
+						snMin<=snMin+1;
+					END IF;
+					
+					--Time changed
+					change<='1';
+								
+				END IF;
+					
+				--If a change occured in the counter -> save the time 
+				IF(change='1') THEN
+					change<='0';
+					snSecSave<=snSec;
+					tSecSave<=tSec;
+					snMinSave<=snMin;
+					tMinSave<=tMin;
+				END IF;
+
+				--Send the time to the decounter
+				snSecOut<=snSec;
+				tSecOut<=tSec;
+				snMinOut<=snMin;
+				tMinOut<=tMin;	
+				
+			--Start case
 			ELSE
-				statePrec<='1';
+				--Last state is a start
+				precState<='1';
 			END IF;
 	
-			vChangOut<=valChang;
-			debug<=pushMin;
-			tmOver<=tmOv;
+			changeOut<=change;
 		END IF;	
 	
 		
