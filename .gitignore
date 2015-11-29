@@ -1,4 +1,7 @@
-#delete all directories
+#delete all files
+*.*
+
+#delete all files*.*#delete all directories
 */*
 
 #Except 01_Projektaufgabe1 and 02_Projektaufgabe_2
