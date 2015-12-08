@@ -27,7 +27,9 @@ PORT(
 		snsSeg			:OUT 			std_logic_vector(6 downto 0);	--7-bits-vector for 7-Segment for the single number of the second	 
 		tsSeg				:OUT 			std_logic_vector(6 downto 0); --7-bits-vector for 7-Segment for the single number of the second
 		snmSeg			:OUT 			std_logic_vector(6 downto 0);	--7-bits-vector for 7-Segment for the single number of the minute	
-		tmSeg				:OUT 			std_logic_vector(6 downto 0)  --7-bits-vector for 7-Segment for the single number of the minute
+		tmSeg				:OUT 			std_logic_vector(6 downto 0);  --7-bits-vector for 7-Segment for the single number of the minute
+		
+		bipOut			:OUT			std_logic		--Output for the signal head (pin28 for the signal and pin30 for the ground)
 	
 	);
 END timer;
@@ -213,7 +215,7 @@ PORT MAP (clk50MHz, timeOver, 250000000, clkQ1Hz); --250.000.000 ns -> 250ms - T
 
 --Signal's frequency 3kHz
 freqSignal : COMPONENT freqDiv
-PORT MAP (clk50MHz, bipSig, 333333, freq3kHz); --333.333ns - TEST 33
+PORT MAP (clk50MHz, timeOver, 333333, freq3kHz); --333.333ns - TEST 50
 
 --Counter
 count : COMPONENT counter
@@ -241,7 +243,7 @@ PORT MAP (clk50MHz, tMinOut, tmSeg);
 
 --Audio
 bipper : COMPONENT audio
-PORT MAP (clk50MHz, clkQ1Hz, freq3kHz, timeOver, endIndicLed, bipSig);
+PORT MAP (clk50MHz, clkQ1Hz, freq3kHz, timeOver, endIndicLed, bipOut);
 
 
 

@@ -25,9 +25,9 @@ END debounce;
 --------------------------------------------
 ARCHITECTURE Behaviour OF debounce IS
 -- Interne signal declaration --
-SIGNAL countClk	: INTEGER 	:= 0; 				--Variable to count
+SIGNAL countClk	: INTEGER 	:= 0; 				--Signal to count
 
-SIGNAL pushBtn		: std_logic	:='0';
+SIGNAL pushBtn		: std_logic	:='0';          --Signal to represent a push
 
 BEGIN
 
@@ -47,14 +47,18 @@ dbc_proc : PROCESS (clk50M, button)
 			ELSE	
 				--Last state of the button was a push
 				IF(pushBtn='1') THEN
-					IF (countClk >= 500) THEN 	--pushing during 10ms means that's a real push(500 because countClk++ every 20ns) 
+					IF (countClk >= 500) THEN 	--pushing during 10ms means that's a real push(500 because 10.000ns/20ns -> 20 ns = 1/50MHz)
 						push<='1'; --real push
 					ELSE	
 						push<='0'; --bug
 					END IF;
+					
+				ELSE
+					push<='0'; -- new
 				END IF;
 				
 				countClk<=0;
+				pushBtn<='0'; --new
 			END IF;			
 			
 		END IF;

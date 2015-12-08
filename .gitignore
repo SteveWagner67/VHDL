@@ -23,4 +23,9 @@
 02_Projektaufgabe_2/*
 !/02_Projektaufgabe_2/*.vhd
 !/02_Projektaufgabe_2/timer.do
+!/02_Projektaufgabe_2/Rapport
+
+02_Projektaufgabe_2/Rapport/*
+!02_Projektaufgabe_2/Rapport/*.pdf
+!02_Projektaufgabe_2/Rapport/*.tex
 

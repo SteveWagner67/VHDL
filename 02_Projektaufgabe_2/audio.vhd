@@ -60,12 +60,10 @@ audio_proc : PROCESS (clk, clkQHz, freqSignal, timeOver)
 								--High state of the signal's frequency 
 								IF(freqSignal='1') THEN
 									bipLed<="111111111";
-									--bipper<='1';
 									
 								--Low state of the signal's frequency 	
 								ELSE
 									bipLed<="000000000";
-									--bipper<='0';
 								END IF;
 								
 								bipper<='1';

@@ -1,9 +1,9 @@
---------------------------------------------------
+---------------------------------------------------
 -- Author: 				Steve Wagner
 -- Matrikelnummer: 	175309
 -- Datum: 				13/11/2015
--- Brief:				To become an 1Hz-frequenz
---------------------------------------------------
+-- Brief:				To become the wish frequenz
+---------------------------------------------------
 
 -- Library Declaration --
 LIBRARY IEEE;
