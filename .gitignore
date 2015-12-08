@@ -22,7 +22,7 @@
 #Delete the contain of 02_Projektaufgabe_2 expect the .vhd and timer.do
 02_Projektaufgabe_2/*
 !/02_Projektaufgabe_2/*.vhd
-!/02_Projektaufgabe_2/timer.do
+!/02_Projektaufgabe_2/*.do
 !/02_Projektaufgabe_2/Rapport
 
 02_Projektaufgabe_2/Rapport/*
