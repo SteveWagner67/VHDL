@@ -2,7 +2,7 @@
 #   Do File for Simulation of the counter #
 #-- Author: Steve Wagner
 #-- Matrikelnummer: 175309
-#-- Datum: 	14/11/2015
+#-- Datum: 	13/11/2015
 ###############################################
 
 # -- Undock wave Window

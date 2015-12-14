@@ -104,7 +104,7 @@
 	\section{Architektur}
 		\begin{figure}[!ht] %add a figure and force it to be in the top of the page
 			\centering	
-			\centerline{\includegraphics[width=20cm] {../architecture.PNG}} %add an image in the center of the page with a width of 20cm
+			\centerline{\includegraphics[width=20cm] {./images/architecture.PNG}} %add an image in the center of the page with a width of 20cm
 			\caption{Hauptarchitektur des Projekts} %legend of the image
 		
 		\end{figure}
@@ -130,7 +130,7 @@
      
 	     \vspace{0.1cm}
      
-		  {\small Der Counter Teil erlaubt, um nach jede Betätige der Sekunde- oder Minute-Taste ein Wert hochzuzählen. Diesen Werte können wieder, nach eine Betätige auf der Clear-Taste, zu Null anfangen.
+		  {\small Der Counter Teil erlaubt, um einen Wert nach jeder Betätige der Sekunde- oder Minute-Taste hochzuzählen. Diesen Werte können wieder, nach einer Betätige auf der Clear-Taste, zu Null anfangen.
 		  \newline
 		  Die Werte sind dann in der Decounter gesendet.
 		  \newline
@@ -166,7 +166,7 @@
      
 		 {\small Der Audio Teil erlaubt, um die Signal-Töte zu erreichen.
 		 \newline
-		 Es fängt in dem Moment der timeOver-Signal zu 1 ist an. Dann wird eine Signal-Töte jede 250ms (clkQHz), mit dem Frequenz des Signals, um etwas zu hören (clk3KHz), auf der dem Signalgeber senden. Diese Signal-Töte wird wieder nach eine Ruhe von 1 Sekunde senden. Dies während eine Minute oder bis man auf der Start-Taste betätigt, um wieder in Stop mode zu gehen. 
+		 Es fängt in dem Moment der timeOver-Signal zu 1 ist an. Dann wird eine Signal-Töte jede 250ms (clkQHz), mit dem Frequenz des Signals, um etwas zu hören (clk3KHz), auf der dem Signalgeber senden. Diese Signal-Töte wird wieder nach einer Ruhe von 1 Sekunde senden. Dies während eine Minute oder bis man auf der Start-Taste betätigt, um wieder in Stop mode zu gehen. 
 		 }
      
     \end{flushleft} %end of the text part written in the left of the page
@@ -191,12 +191,12 @@
 	
 			\begin{figure}[!ht]
 				\centering	
-				\centerline{\includegraphics[width=20cm] {../counter_snSec.png}} %ajouter une image de taille 20cm, centrée
+				\centerline{\includegraphics[width=20cm] {./images/counter_snSec.png}} %ajouter une image de taille 20cm, centrée
 				\caption{Zustandsdiagramm des Sekundeneinheit-Vorwärtszählers}
 			\end{figure}
 	
 			\begin{flushleft}
-				 Der Sekundeneinheit-Vorwärtszähler zählt nur wenn man in Stop mode ist (start=0) und wenn man auf die Sekunde-Taste betätigt.
+				 Der Sekundeneinheit-Vorwärtszähler zählt nur wenn man in Stop mode ist (start=0) hoch und wenn man auf die Sekunde-Taste betätigt.
 				 \newline
 				 Wenn die 9 Wert erreichen ist, wird dann in der nächste Sekunde-Taste-Betätige, die Sekundenzehner hochzählen und wieder die Sekundeneinheit zu Null anfangen.
 			\end{flushleft}
@@ -209,12 +209,12 @@
 			\subsubsection{Sekundenzehner}
 			\begin{figure}[!ht]
 				\centering	
-				\centerline{\includegraphics[width=20cm] {../counter_tSec.png}} %ajouter une image de taille 20cm, centrée
+				\centerline{\includegraphics[width=20cm] {./images/counter_tSec.png}} %ajouter une image de taille 20cm, centrée
 				\caption{Zustandsdiagramm des Sekundenzehner-Vorwärtszählers}
 			\end{figure}
 		
 			\begin{flushleft}
-				Der Sekundenzehner-Vorwärtszähler zählt nur wenn man in Stop mode ist, wenn eine Betätige auf der Sekunde-Taste gibt und wenn die 	Sekundeeinheit von 9 bis 0 geht.
+				Der Sekundenzehner-Vorwärtszähler zählt nur wenn man in Stop mode ist hoch, wenn eine Betätige auf der Sekunde-Taste gibt und wenn die Sekundeneinheit von 9 bis 0 geht.
 				Wenn die 5 erreichen ist, fängt der Sekundenzehner wieder zu 0 an.
 			\end{flushleft}
 
@@ -226,7 +226,7 @@
 			\subsubsection{Minuteneiheit}
 			\begin{figure}[!ht]
 				\centering	
-				\centerline{\includegraphics[width=20cm] {../counter_snMin.png}} %ajouter une image de taille 20cm, centrée
+				\centerline{\includegraphics[width=20cm] {./images/counter_snMin.png}} %ajouter une image de taille 20cm, centrée
 				\caption{Zustandsdiagramm des Minuteneinheit-Vorwärtszählers}
 			\end{figure}
 		
@@ -242,7 +242,7 @@
 			\subsubsection{Minutenzehner}	
 			\begin{figure}[!ht]
 				\centering	
-				\centerline{\includegraphics[width=20cm] {../counter_tMin.png}} %ajouter une image de taille 20cm, centrée
+				\centerline{\includegraphics[width=20cm] {./images/counter_tMin.png}} %ajouter une image de taille 20cm, centrée
 				\caption{Zustandsdiagramm des Minutenzehner-Vorwärtszählers}
 			\end{figure}
 		
@@ -262,12 +262,12 @@
 			\subsubsection{Sekundeneinheit}
 			\begin{figure}[!ht]
 				\centering	
-				\centerline{\includegraphics[width=20cm] {../decounter_snSec.png}} %ajouter une image de taille 20cm, centrée
+				\centerline{\includegraphics[width=20cm] {./images/decounter_snSec.png}} %ajouter une image de taille 20cm, centrée
 				\caption{Zustandsdiagramm des Sekundeneinheit-Rückwärtszählers}
 			\end{figure}
 	
 			\begin{flushleft}
-				Der Sekundeneinheit-Rückwärtszähler fängt mit dem letzten Wert von dem Sekundeneinheit-Vorwärtszähler, wenn man in Start mode ist und wenn eine Sekunde vergangen ist.
+				Der Sekundeneinheit-Rückwärtszähler fängt mit dem letzten Wert von dem Sekundeneinheit-Vorwärtszähler, wenn man in Start mode ist und wenn eine Sekunde vergangen ist an.
 				\newline
 				Wenn der Wert 0 erreichen ist und wenn die anderen Werte noch nicht zu 0 sind, fängt der Wert wieder zu 9 an. In dem Fall die anderen Werte zu 0 sind, bleibt dieser Wert zu 0 und geht die timeOver-Signal zu 1.
 			\end{flushleft}
@@ -280,7 +280,7 @@
 			\subsubsection{Sekundenzehner}
 			\begin{figure}[!ht]
 				\centering	
-				\centerline{\includegraphics[width=20cm] {../decounter_tSec.png}} %ajouter une image de taille 20cm, centrée
+				\centerline{\includegraphics[width=20cm] {./images/decounter_tSec.png}} %ajouter une image de taille 20cm, centrée
 				\caption{Zustandsdiagramm des Sekundenzehner-Rückwärtszählers}
 			\end{figure}
 		
@@ -297,12 +297,12 @@
 	
 			\begin{figure}[!ht]
 				\centering	
-				\centerline{\includegraphics[width=20cm] {../decounter_snMin.png}} %ajouter une image de taille 20cm, centrée
+				\centerline{\includegraphics[width=20cm] {./images/decounter_snMin.png}} %ajouter une image de taille 20cm, centrée
 				\caption{Zustandsdiagramm des Minuteneinheits-Rückwärtszählers}
 			\end{figure}
 	
 			\begin{flushleft}
-				 Der Minuteneinheits-Rückwärtszähler fängt mit dem letzten Wert von dem Minuteneinheit-Vorwärtszähler, wenn man in Start mode ist und wenn die Sekundenzehner von 0 zu 5 geht.
+				 Der Minuteneinheits-Rückwärtszähler fängt mit dem letzten Wert von dem Minuteneinheit-Vorwärtszähler, wenn man in Start mode ist und wenn die Sekundenzehner von 0 zu 5 geht an.
 			\end{flushleft}
 
 			\newpage
@@ -313,12 +313,12 @@
 			\subsubsection{Minutenzehner}
 			\begin{figure}[!ht]
 				\centering	
-				\centerline{\includegraphics[width=20cm] {../decounter_tMin.png}} %ajouter une image de taille 20cm, centrée
+				\centerline{\includegraphics[width=20cm] {./images/decounter_tMin.png}} %ajouter une image de taille 20cm, centrée
 				\caption{Zustandsdiagramm des Minutenzehner-Rückwärtszählers}
 			\end{figure}
 	
 			\begin{flushleft}
-				Der Minutenzehner-Rückwärtszähler fängt mit dem letzten Wert von dem Minutenzehner-Vorwärtszähler, wenn man in Start mode ist und wenn die Minuteneinheit von 0 zu 9 geht.
+				Der Minutenzehner-Rückwärtszähler fängt mit dem letzten Wert von dem Minutenzehner-Vorwärtszähler, wenn man in Start mode ist und wenn die Minuteneinheit von 0 zu 9 geht an.
 			\end{flushleft}
 
 	\newpage
@@ -334,7 +334,7 @@
 		\subsection{Debounce (für Drucktaste)}
 		\begin{figure}[!ht]
 			\centering	
-			\centerline{\includegraphics[width=20cm] {../debounce.png}} %ajouter une image de taille 20cm, centrée
+			\centerline{\includegraphics[width=20cm] {./images/debounce.png}} %ajouter une image de taille 20cm, centrée
 			\caption{Simulation eine Debounce von 250ns}
 		\end{figure}
 
@@ -343,7 +343,7 @@
 				\item \textbf{Problem}
 				\begin{itemize}
 				{\small
-					\item Wenn Rauschen auf einer Taste gibt, kann einer unwünsche Wert stattfinden. Deswegen soll ein Debounce herstellen, um diese Situation zu vermeiden. 
+					\item Wenn Rauschen auf einer Taste gibt, kann ein unwünscher Wert stattfinden. Deswegen soll ein Debounce herstellen, um diese Situation zu vermeiden. 
 					\item Für diese Simulation ist eine Warte von 250ns benutzt. In praktisch ist eine Warte von 10ms benutzt.	
 				}
 				\end{itemize}
@@ -355,7 +355,7 @@
 				{\small
 					\item Diese Simulation ist mit \underline{debouce.do} geprüft
 					\item Ab 0 fäng eine Betätige während 200ns an. Es ist nicht genug, deswegen bleibt den push zu 0.
-					\item Ab 500ns fäng wieder eine Betätige während 400ns. Das ist genug. Man hat also ein push, die eine richtige Betätige darstellt.
+					\item Ab 500ns fäng wieder eine Betätige während 400ns an. Das ist genug. Man hat also ein push, die eine richtige Betätige darstellt.
 					\item Diese Debounce ist für jede Taste benutzen. 
 				}
 			\end{itemize}
@@ -372,7 +372,7 @@
 		\subsection{Frequenzteiler}
 			\begin{figure}[!ht]
 				\centering	
-				\centerline{\includegraphics[width=20cm] {../freqDiv.png}} %ajouter une image de taille 20cm, centrée
+				\centerline{\includegraphics[width=20cm] {./images/freqDiv.png}} %ajouter une image de taille 20cm, centrée
 				\caption{Simulation eine 500ns-Period-Signal mit dem Frequenzteiler}
 			\end{figure}
 
@@ -409,7 +409,7 @@
 		\subsection{Vorwärtszähler (Counter)}
 			\begin{figure}[!ht]
 				\centering	
-				\centerline{\includegraphics[width=20cm] {../counter.png}} %ajouter une image de taille 20cm, centrée
+				\centerline{\includegraphics[width=20cm] {./images/counter.png}} %ajouter une image de taille 20cm, centrée
 				\caption{Simulation des Vorwärtszählers}
 			\end{figure}
 		
@@ -438,8 +438,8 @@
 							{\small
 								\item Diese Simulation ist mit \underline{counter.do} geprüft
 							\item Man fängt diese Simulation in Stop Zustand an, um der Werte 99 Minuten 59 Sekunden zu haben, die in praktisch aus der Decounter kommt.
-							\item Nach Betätigen die Sec- und Min-Taste geht die Sekunden und Minuten wieder zu null, weil der maximale Wert (99min59sec) erreichen ist.
-							\item Ab 60ns kann man sehen, dass die Werte nach Betätigen der Min- und Sec-Taste hochzählen (und die mit dem Clock synchronisiert sind).
+							\item Nach Betätigen die Sekunde- und Minute-Taste gehen die Sekunden und Minuten wieder zu null, weil der maximale Wert (99min59sec) erreichen ist.
+							\item Ab 60ns kann man sehen, dass die Werte nach Betätigen der Sekunde- und Minute-Taste hochzählen (und die mit dem Clock synchronisiert sind).
 							\item Ab 130ns gibt eine Clear-Betätige, die alle Werte wieder zu null macht.
 							\item Ab 160ns geht man wieder zu den Start Mode. Man sieht dann, dass die Betätigen nicht mehr funcktionnieren.
 							}
@@ -456,7 +456,7 @@
 		\subsection{Rückwärtszähler (Decounter)}
 			\begin{figure}[!ht]
 				\centering	
-				\centerline{\includegraphics[width=20cm] {../decounter.png}} %ajouter une image de taille 20cm, centrée
+				\centerline{\includegraphics[width=20cm] {./images/decounter.png}} %ajouter une image de taille 20cm, centrée
 				\caption{Simulation des Rückwärtszählers}
 			\end{figure}
 	
@@ -488,7 +488,7 @@
 							\item Diese Simulation ist mit \underline{decounter.do} geprüft
 							\item Man fängt diese Simulation in Start Zustand an, um mit der Werte 01 Minute 10 Sekunden zu haben, die praktisch aus der Counter kommt.
 							\item Ab 50ns zählt der Decounter jede rising edge von den 1-Hz-Clock runter, bis 1500ns, wo man wieder in Start Zustand geht. Man sieht dann, dass der letzte Wert bleibt.
-							\item Ab 2000ns zählt der Decounter wieder runter bis zu Null. Dann kann man sehen, dass der time over zu 1 geht. Das zeigt das Ende der Zeit.
+							\item Ab 2000ns zählt der Decounter bis zu Null runter. Dann kann man sehen, dass das timeOver-Signal zu 1 geht. Das zeigt das Ende der Zeit.
 						}
 					\end{itemize}
 					
@@ -503,7 +503,7 @@
 		\subsection{Audio / Ende der Zeit}
 			\begin{figure}[!ht]
 				\centering	
-				\centerline{\includegraphics[width=20cm] {../audio.png}} %ajouter une image de taille 20cm, centrée
+				\centerline{\includegraphics[width=20cm] {./images/audio.png}} %ajouter une image de taille 20cm, centrée
 				\caption{Simulation des Ende der Zeit mit dem Signalgeber und Leds }
 			\end{figure}
 	
@@ -528,7 +528,7 @@
 					\begin{itemize}
 						{\small
 							\item Diese Simulation ist mit \underline{audio.do} geprüft
-							\item In diese Simulation, dauert die minute nur ``20`` Sekunden
+							\item In diese Simulation, dauert die Minute nur ``20`` Sekunden
 							\item Man sieht, dass man 4 Signal-Töne (die nochmaleweise jede 250ms-Period dauert) hat, und dann eine Ruhe (die 1 Sekunde in praktisch dauert) gibt.
 							\item Nach 20 Sekunden (die in praktisch 1 Minute ist) von Signal-Töten gibt es eine Ruhe bis man auf Stop betätigt 
 						}
@@ -545,7 +545,7 @@
 		\subsection{Display}
 			\begin{figure} [!ht]
 				\centering	
-				\centerline{\includegraphics[width=20cm] {../display.png}} %ajouter une image de taille 20cm, centrée
+				\centerline{\includegraphics[width=20cm] {./images/display.png}} %ajouter une image de taille 20cm, centrée
 				\caption{Simulation des Displays für jeden Wert (0-9)}
 			\end{figure}
 
@@ -604,7 +604,7 @@
 		\subsection{Ganze Architektur (Timer)}
 			\begin{figure}[!ht]
 				\centering	
-				\centerline{\includegraphics[width=20cm] {../timer.png}} %ajouter une image de taille 20cm, centrée
+				\centerline{\includegraphics[width=20cm] {./images/timer.png}} %ajouter une image de taille 20cm, centrée
 				\caption{Simulation des Rückwärtszählers}
 			\end{figure}
 
@@ -642,8 +642,8 @@
 							\item Ab 1550ns gibt es ein Betätige auf der Start-Taste.
 							\item Dann zählt der Decounter runter, bis man auf der Start-Taste betätigt (ab 2250ns).
 							\item Wir sind in diesem Moment in Stop mode. Man zieht, dass der letzte Wert von Decounter bleibt.
-							\item Wir zählen diesen Wert wieder hoch, bis 3 Sekunden und gehen wir wieder in Start mode (ab 2600ns) bis man den 0 Wert erreichen (ab 4250ns)
-							\item Dann gibt es die Signal-Töte und eine Ruhe, bis man auf den Start-Taste wieder betätigt (7250ns).
+							\item Wir zählen diesen Wert wieder hoch, bis 3 Sekunden und gehen wieder in Start mode (ab 2600ns) bis man den 0 Wert erreichen ist (ab 4250ns)
+							\item Dann gibt es die Signal-Töne und eine Ruhe, bis man auf den Start-Taste wieder betätigt (7250ns).
 							\item Man sieht in diesem Fall, dass der letzte Wert programmiert (vor wir in Start mode gehen) wieder dargestellt ist(auf snSecOut).
 							\item Man kann wieder diesen Wert hochzählen, und wieder in Start mode gehen. 
 						}
@@ -663,27 +663,27 @@
 
 		\begin{figure}[!ht]
 			\centering	
-			\centerline{\includegraphics[width=20cm] {../rtl_viewer.png}} %ajouter une image de taille 20cm, centrée
+			\centerline{\includegraphics[width=20cm] {./images/rtl_viewer.png}} %ajouter une image de taille 20cm, centrée
 			\caption{Darstellung des Projekts mit RTL-Viewer von Quartus}
 		\end{figure}
 
 		\begin{flushleft}
 			Abschließend kann man die Abbildung 1, die am Anfang des Projekts hergestellt ist, mit der Abbildung 17, die am Ende des Projekts hergestellt ist, vergleichen. Man sieht dass, was man am Anfang möchte, ist am Ende hergestellt. Das zeigt, dass die Architektur am Anfang sehr wichtig um etwas Komplex zu herstellen ist.
 			\newline
-			Reihenweise sind jeden Spezifikatione mit einem Do-File geprüft (Siehe jede Schritt in 3. Simulation mit ModelSim). Alle Spezifikatione sind einhalten.
+			Reihenweise sind jede Spezifikation mit einem Do-File geprüft (Siehe jede Schritt in 3. Simulation mit ModelSim). Alle Spezifikationen sind einhalten.
 			\newline
-			Außerdem, war diese Projekt am Anfang mit einigen Modulus und Teilunge gemacht (für die Decounter). Aus Neugier, möchte ich wissen, ob das optimisch ist. Mit dem RTL-Viewer hatte ich ein Architektur mit Modulus und Teilung mit eine mit IF-Bedingunge anstatt die beide vergleichen. Die Ergebnisse sind Abbildung 18 und 19 dargestellt.
+			Außerdem, war diese Projekt am Anfang mit einigen Modulus und Teilunge gemacht (für die Decounter). Aus Neugier, möchte ich wissen, ob das optimisch ist. Mit dem RTL-Viewer hatte ich ein Architektur mit Modulus und Teilung mit eine mit IF-Bedingunge, anstatt die beide, vergleichen. Die Ergebnisse sind Abbildung 18 und 19 dargestellt.
 			
 			\begin{figure}[!ht]
 				\centering	
-				\centerline{\includegraphics[width=20cm] {../RTL_viewer/Modulus/decounter}} %ajouter une image de taille 20cm, centrée
-				\caption{Darstellung der Decounter mit Modulus und Teilung}
+				\centerline{\includegraphics[width=20cm] {./RTL_viewer/Modulus/decounter}} %ajouter une image de taille 20cm, centrée
+				\caption{Darstellung der Decounter mit Modulus und Teilunge}
 			\end{figure}
 			
 			\begin{figure}[!ht]
 				\centering	
-				\centerline{\includegraphics[width=20cm] {../RTL_viewer/withtout_arithmetic/decounter}} %ajouter une image de taille 20cm, centrée
-				\caption{Darstellung der Decounter mit IF-Bedingung}
+				\centerline{\includegraphics[width=20cm] {./RTL_viewer/withtout_arithmetic/decounter}} %ajouter une image de taille 20cm, centrée
+				\caption{Darstellung der Decounter mit IF-Bedingunge}
 			\end{figure}
 			
 			Man sieht, dass die Modulus und Teilunge viele Logik benutzt. Deswegen habe ich letztendlich diese Decounter nur mit IF-Bedingunge hergestellt.

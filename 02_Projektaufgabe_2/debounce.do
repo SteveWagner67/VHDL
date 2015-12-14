@@ -2,7 +2,7 @@
 #   Do File for Simulation of the debounce #
 #-- Author: Steve Wagner
 #-- Matrikelnummer: 175309
-#-- Datum: 	14/11/2015
+#-- Datum: 	23/11/2015
 ########################################################################################################################################
 #
 #-- For this simulation,  the value of the countClk in the If-Condition (value = (time in ns) / 20ns) in debounce.vhd should be changed
